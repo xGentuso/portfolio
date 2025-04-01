@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Personal Portfolio Website
+
+A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS. This portfolio showcases my work as a mobile web developer and provides a platform for potential employers to learn more about my skills and experience.
+
+## Features
+
+- 🎨 Modern and clean design
+- 📱 Fully responsive layout
+- 🌙 Dark mode support
+- ⚡ Fast performance with Next.js
+- 🎭 Smooth animations with Framer Motion
+- 🎯 SEO optimized
+- 📝 Easy to customize
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/portfolio.git
+   cd portfolio
+   ```
 
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Run the development server:
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Customization
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Personal Information
 
-## Learn More
+1. Update your personal information in the following files:
+   - `src/app/page.tsx` - Hero section and featured projects
+   - `src/app/about/page.tsx` - About section
+   - `src/app/contact/page.tsx` - Contact information
+   - `src/components/layout/Footer.tsx` - Footer links
 
-To learn more about Next.js, take a look at the following resources:
+2. Add your project images to the `public/projects` directory and update the image paths in:
+   - `src/app/page.tsx`
+   - `src/app/projects/page.tsx`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Update your skills in `src/app/skills/page.tsx`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Styling
 
-## Deploy on Vercel
+1. The primary color can be customized in `tailwind.config.ts`
+2. Global styles can be modified in `src/app/globals.css`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This portfolio is optimized for deployment on Vercel:
+
+1. Push your code to GitHub
+2. Import your repository on [Vercel](https://vercel.com)
+3. Deploy!
+
+## Built With
+
+- [Next.js](https://nextjs.org/) - React framework
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [Framer Motion](https://www.framer.com/motion/) - Animations
+- [React Icons](https://react-icons.github.io/react-icons/) - Icons
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
