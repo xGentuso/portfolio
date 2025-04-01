@@ -32,26 +32,7 @@ npm run dev
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
 
-## Customization
 
-### Personal Information
-
-1. Update your personal information in the following files:
-   - `src/app/page.tsx` - Hero section and featured projects
-   - `src/app/about/page.tsx` - About section
-   - `src/app/contact/page.tsx` - Contact information
-   - `src/components/layout/Footer.tsx` - Footer links
-
-2. Add your project images to the `public/projects` directory and update the image paths in:
-   - `src/app/page.tsx`
-   - `src/app/projects/page.tsx`
-
-3. Update your skills in `src/app/skills/page.tsx`
-
-### Styling
-
-1. The primary color can be customized in `tailwind.config.ts`
-2. Global styles can be modified in `src/app/globals.css`
 
 ## Deployment
 
