@@ -1,4 +1,4 @@
-# Ryan Mota's Portfolio Website
+# Ryan Mota's Portfolio
 
 [![Portfolio Preview](./public/preview.png)](https://ryanmota.dev)
 
