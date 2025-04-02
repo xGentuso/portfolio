@@ -37,7 +37,7 @@ const technologies = [
     icon: SiSwift,
     color: "text-[#F05138]",
     description: "iOS Development",
-    level: "Intermediate"
+    level: "Advanced"
   },
   {
     name: "Kotlin",
