@@ -1,18 +1,46 @@
-# Personal Portfolio Website
+# Ryan Mota's Portfolio Website
 
-A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS. This portfolio showcases my work as a mobile web developer and provides a platform for potential employers to learn more about my skills and experience.
+[![Portfolio Preview](public/preview.png)](https://ryanmota.dev)
 
-## Features
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com)
 
-- 🎨 Modern and clean design
-- 📱 Fully responsive layout
-- 🌙 Dark mode support
-- ⚡ Fast performance with Next.js
-- 🎭 Smooth animations with Framer Motion
+Welcome to my portfolio website repository! This is a modern, responsive portfolio showcasing my projects, skills, and experience as a software developer. Visit the live site at [ryanmota.dev](https://ryanmota.dev)
+
+## 🎯 Project Highlights
+
+- **Modern Tech Stack**: Built with Next.js 14, TypeScript, and Tailwind CSS
+- **Performance Focused**: Optimized for speed with 90+ Lighthouse scores
+- **User Experience**: Intuitive navigation with command palette (⌘K)
+- **Responsive Design**: Seamless experience across all devices
+- **Dark Mode**: Easy on the eyes with automatic theme detection
+- **Analytics**: Built-in visitor tracking and performance monitoring
+
+## 🌟 Key Features
+
+- 🎨 Clean, minimalist design
+- 📱 Mobile-first approach
+- 🌙 Dark/Light mode toggle
+- ⚡ Blazing fast page loads
+- 🎭 Smooth page transitions
 - 🎯 SEO optimized
-- 📝 Easy to customize
+- 📊 Real-time analytics
+- 🔍 Quick search functionality
+- 🔄 Continuous deployment
 
-## Getting Started
+## 🛠 Tech Stack
+
+- **Framework**: [Next.js 14](https://nextjs.org/) with App Router
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Icons**: [React Icons](https://react-icons.github.io/react-icons/)
+- **Analytics**: [Vercel Analytics](https://vercel.com/analytics)
+- **Deployment**: [Vercel](https://vercel.com)
+
+## 🚀 Development
 
 1. Clone the repository:
    ```bash
@@ -25,31 +53,29 @@ A modern, responsive portfolio website built with Next.js, TypeScript, and Tailw
    npm install
    ```
 
-3. Run the development server:
-```bash
-npm run dev
-```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
+4. Visit [http://localhost:3000](http://localhost:3000)
 
+## 📈 Performance
 
+- 90+ Performance score on Lighthouse
+- Optimized image loading
+- Efficient component rendering
+- Minimal bundle size
+- Fast page transitions
 
-## Deployment
+## 🔗 Quick Links
 
-This portfolio is optimized for deployment on Vercel:
+- **Live Site**: [ryanmota.dev](https://ryanmota.dev)
+- **Portfolio Status**: [![Vercel Status](https://img.shields.io/badge/Vercel-Deployed-success)](https://ryanmota.dev)
 
-1. Push your code to GitHub
-2. Import your repository on [Vercel](https://vercel.com)
-3. Deploy!
-
-## Built With
-
-- [Next.js](https://nextjs.org/) - React framework
-- [TypeScript](https://www.typescriptlang.org/) - Type safety
-- [Tailwind CSS](https://tailwindcss.com/) - Styling
-- [Framer Motion](https://www.framer.com/motion/) - Animations
-- [React Icons](https://react-icons.github.io/react-icons/) - Icons
-
-## License
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+Designed & Built with ❤️ by Ryan Mota | [ryanmota.dev](https://ryanmota.dev)
