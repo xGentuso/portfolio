@@ -7,6 +7,7 @@ import { Section } from "@/components/ui/Section";
 import { FiGithub, FiLinkedin, FiMail, FiCode, FiStar, FiCode as FiCodeIcon, FiLayout, FiSmartphone, FiExternalLink, FiFolder } from "react-icons/fi";
 import { AchievementCard } from "@/components/ui/AchievementCard";
 import { CodePlayground } from "@/components/ui/CodePlayground";
+import { Hero } from "@/components/Hero";
 
 // Add before the technologies array
 interface Project {
@@ -76,15 +77,6 @@ const featuredProjects: Project[] = [
     githubLink: "https://github.com/xGentuso/CryptoExchange",
     type: "Full Stack"
   }
-];
-
-// Define sections for the scroll indicator
-const sections = [
-  { id: "hero", label: "Home" },
-  { id: "about", label: "About" },
-  { id: "skills", label: "Skills & Tech" },
-  { id: "projects", label: "Projects" },
-  { id: "contact", label: "Contact" },
 ];
 
 const skillCategories = [
@@ -216,45 +208,17 @@ export default function Home() {
   ]);
   
   const [currentSnippet, setCurrentSnippet] = useState(0);
-  const [activeSection, setActiveSection] = useState("hero");
 
   // Simple scroll tracking for UI feedback
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
       const viewportHeight = window.innerHeight;
-      
-      // Find which section is most visible
-      sections.forEach(({ id }) => {
-        const element = document.getElementById(id);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          // If the section is taking up most of the viewport, mark it as active
-          if (rect.top <= viewportHeight / 3 && rect.bottom >= viewportHeight / 3) {
-            setActiveSection(id);
-          }
-        }
-      });
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Simple, modern scroll to section function
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      // Set active section immediately for better UI feedback
-      setActiveSection(id);
-      
-      // Use the browser's native smooth scrolling
-      element.scrollIntoView({ 
-        behavior: "smooth",
-        block: "start"
-      });
-    }
-  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -266,53 +230,8 @@ export default function Home() {
 
   return (
     <div className="bg-white dark:bg-gray-900 transition-colors duration-300">
-      {/* Hero Section */}
-      <section id="hero" className="min-h-screen bg-indigo-600 text-white flex items-center relative overflow-hidden">
-        <div className="container mx-auto px-6 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-3xl"
-          >
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-cyan-300 text-xl mb-4 block"
-            >
-              Hi, I'm Ryan Mota
-            </motion.span>
-            <h1 className="text-6xl font-bold mb-6">
-              Junior Software Engineer
-              <span className="text-cyan-300">.</span>
-            </h1>
-            <p className="text-xl text-indigo-100 mb-8">
-              I like to craft solid and scalable software products with great user experiences.
-            </p>
-            <div className="flex gap-4">
-              <a
-                href="https://github.com/xGentuso"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:text-cyan-300 transition-colors"
-              >
-                <FiGithub className="w-8 h-8" />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/ryancodes/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:text-cyan-300 transition-colors"
-              >
-                <FiLinkedin className="w-8 h-8" />
-              </a>
-            </div>
-          </motion.div>
-        </div>
-        <div className="absolute right-0 top-0 w-1/2 h-full bg-cyan-300 opacity-20 transform skew-x-12"></div>
-      </section>
-
+      <Hero />
+      
       {/* About Section */}
       <section id="about" className="min-h-screen bg-gradient-to-b from-white to-indigo-50 dark:from-gray-900 dark:to-indigo-950/30 flex items-center py-20">
         <div className="container mx-auto px-6">
@@ -372,7 +291,6 @@ export default function Home() {
               <div className="w-full aspect-square bg-gradient-to-br from-indigo-100 to-white dark:from-indigo-950 dark:to-gray-900 rounded-2xl relative overflow-hidden shadow-2xl">
                 <div className="absolute inset-1 bg-gradient-to-br from-indigo-500/10 to-transparent rounded-2xl backdrop-blur-sm">
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <p className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">Your Photo Here</p>
                   </div>
                 </div>
                 {/* Decorative elements */}
@@ -657,31 +575,6 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-
-      {/* Scroll Indicator */}
-      <div className="fixed right-8 bottom-8 z-40 flex flex-col items-center">
-        {sections.map(({ id, label }) => (
-          <motion.button
-            key={id}
-            onClick={() => scrollToSection(id)}
-            className="group relative flex items-center"
-            whileHover={{ x: -4 }}
-            transition={{ duration: 0.2 }}
-          >
-            <span className="opacity-0 group-hover:opacity-100 absolute right-6 text-sm text-indigo-600 dark:text-indigo-400 whitespace-nowrap transition-opacity duration-200">
-              {label}
-            </span>
-            <div
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                activeSection === id
-                  ? "bg-indigo-600 scale-125"
-                  : "bg-gray-300 hover:bg-indigo-400"
-              }`}
-              aria-label={`Scroll to ${label}`}
-            />
-          </motion.button>
-        ))}
-      </div>
     </div>
   );
 }
