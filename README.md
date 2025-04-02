@@ -1,6 +1,6 @@
 # Ryan Mota's Portfolio Website
 
-[![Portfolio Preview](public/preview.png)](https://ryanmota.dev)
+[![Portfolio Preview](./public/preview.png)](https://ryanmota.dev)
 
 [![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
