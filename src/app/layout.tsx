@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/lib/theme";
 import { ThemeSwitcher } from "@/components/ui/ThemeSwitcher";
 import CommandPalette from "@/components/ui/CommandPalette";
 import Footer from "@/components/layout/Footer";
+import { Analytics } from '@vercel/analytics/react';
 import { metadata } from "./metadata";
 
 const inter = Inter({
@@ -35,6 +36,7 @@ export default function RootLayout({
             <Footer />
           </div>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
