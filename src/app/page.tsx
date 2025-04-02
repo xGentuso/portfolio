@@ -9,6 +9,9 @@ import { AchievementCard } from "@/components/ui/AchievementCard";
 import { CodePlayground } from "@/components/ui/CodePlayground";
 import { Hero } from "@/components/Hero";
 import TechStack from "@/components/TechStack";
+import Projects from "@/components/Projects";
+import CodeExamples from "@/components/CodeExamples";
+import Contact from "@/components/Contact";
 
 interface Project {
   title: string;
@@ -103,7 +106,7 @@ export default function Home() {
   }, [codeSnippets.length]);
 
   return (
-    <div className="bg-white dark:bg-gray-900 transition-colors duration-300">
+    <div className="bg-[#0B1120] transition-colors duration-300">
       <Hero />
       
       {/* About Section */}
@@ -168,6 +171,14 @@ export default function Home() {
               <div className="w-full aspect-square bg-gradient-to-br from-indigo-100 to-white dark:from-indigo-950 dark:to-gray-900 rounded-2xl relative overflow-hidden shadow-2xl">
                 <div className="absolute inset-1 bg-gradient-to-br from-indigo-500/10 to-transparent rounded-2xl backdrop-blur-sm">
                   <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="relative w-full h-full">
+                      <img
+                        src="/profile.png"
+                        alt="Ryan Mota"
+                        className="object-cover w-full h-full rounded-2xl"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/20 to-transparent rounded-2xl" />
+                    </div>
                   </div>
                 </div>
                 {/* Decorative elements */}
@@ -183,184 +194,13 @@ export default function Home() {
       <TechStack />
 
       {/* Projects Section */}
-      <Section
-        id="projects"
-        className="py-20"
-      >
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-5xl font-bold text-indigo-600 dark:text-indigo-400 mb-12">My Projects</h2>
-            <div className="space-y-12">
-              <div className="grid md:grid-cols-2 gap-6">
-                {featuredProjects.map((project, index) => (
-                  <motion.div
-                    key={project.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer"
-                    onClick={() => window.open(project.githubLink, '_blank')}
-                  >
-                    <div className="absolute inset-0 bg-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="p-6 relative">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-2">
-                          <FiFolder className="w-8 h-8 text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-500 transition-colors" />
-                          <span className="px-3 py-1 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-full text-sm group-hover:bg-indigo-100 dark:group-hover:bg-indigo-800/40 transition-colors">
-                            {project.type}
-                          </span>
-                        </div>
-                        <div className="flex gap-3">
-                          <FiGithub className="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors" />
-                          {project.liveLink && (
-                            <FiExternalLink className="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors" />
-                          )}
-                        </div>
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                        {project.title}
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-300 mb-6 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors">
-                        {project.description}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {project.technologies.map((tech) => (
-                          <span
-                            key={tech}
-                            className="px-3 py-1 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-full text-sm group-hover:bg-indigo-100 dark:group-hover:bg-indigo-800/40 transition-colors"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="text-sm text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
-                        View Project <FiExternalLink className="w-4 h-4" />
-                      </span>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* GitHub Activity Section */}
-              <motion.div 
-                className="bg-white rounded-2xl shadow-lg overflow-hidden mt-12"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-              >
-                <div className="p-6 border-b border-gray-100 flex justify-between items-center">
-                  <div className="flex items-center">
-                    <FiGithub className="w-5 h-5 text-indigo-600 mr-2" />
-                    <h3 className="font-bold text-gray-900">GitHub Activity</h3>
-                  </div>
-                  <span className="text-sm text-gray-500">Last 12 months</span>
-                </div>
-                <div className="p-6">
-                  <img 
-                    src={`https://ghchart.rshah.org/4f46e5/xGentuso`}
-                    alt="GitHub Contribution Chart" 
-                    className="w-full h-auto rounded" 
-                  />
-                </div>
-              </motion.div>
-
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href="https://github.com/xGentuso"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-center flex items-center justify-center gap-2"
-                >
-                  <FiGithub className="w-5 h-5" />
-                  View More Projects
-                </a>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </Section>
+      <Projects />
 
       {/* Code Examples Section */}
-      <Section
-        id="code-playground"
-        className="py-20"
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
-              Code Examples
-            </h2>
-            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-              Interactive examples showcasing my coding style and technical expertise
-            </p>
-          </div>
-          <CodePlayground />
-        </div>
-      </Section>
+      <CodeExamples />
 
       {/* Contact Section */}
-      <Section
-        id="contact"
-        className="py-20"
-      >
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="max-w-2xl mx-auto"
-          >
-            <h2 className="text-5xl font-bold text-indigo-600 mb-8">Send me a message!</h2>
-            <p className="text-gray-700 text-lg mb-12">
-              Got a question or proposal, or just want to say hello? Go ahead.
-            </p>
-            <form className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-gray-700 mb-2">Your Name</label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                    placeholder="Enter your name"
-                  />
-                </div>
-                <div>
-                  <label className="block text-gray-700 mb-2">Email Address</label>
-                  <input
-                    type="email"
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                    placeholder="Enter your email"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="block text-gray-700 mb-2">Your Message</label>
-                <textarea
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                  rows={6}
-                  placeholder="Hi, I think we need a design system for our products at Company X. How soon can you hop on to discuss this?"
-                ></textarea>
-              </div>
-              <button
-                type="submit"
-                className="px-8 py-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
-              >
-                SHOOT →
-              </button>
-            </form>
-          </motion.div>
-        </div>
-      </Section>
+      <Contact />
     </div>
   );
 }

@@ -1,123 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { 
-  SiReact, 
-  SiSwift, 
-  SiKotlin,
-  SiJavascript, 
-  SiTypescript, 
-  SiNodedotjs, 
-  SiMongodb, 
-  SiDocker, 
-  SiGithub,
-  SiNextdotjs,
-  SiPhp 
-} from "react-icons/si";
-import { DiJava } from "react-icons/di";
 import { useEffect, useRef } from "react";
-
-const technologies = [
-  {
-    name: "React",
-    icon: SiReact,
-    color: "text-[#61DAFB]",
-    description: "Frontend Development",
-    level: "Advanced"
-  },
-  {
-    name: "Next.js",
-    icon: SiNextdotjs,
-    color: "text-[#000000] dark:text-white",
-    description: "React Framework",
-    level: "Advanced"
-  },
-  {
-    name: "Swift",
-    icon: SiSwift,
-    color: "text-[#F05138]",
-    description: "iOS Development",
-    level: "Intermediate"
-  },
-  {
-    name: "Kotlin",
-    icon: SiKotlin,
-    color: "text-[#7F52FF]",
-    description: "Android Development",
-    level: "Intermediate"
-  },
-  {
-    name: "Java",
-    icon: DiJava,
-    color: "text-[#007396]",
-    description: "Backend Development",
-    level: "Advanced"
-  },
-  {
-    name: "PHP",
-    icon: SiPhp,
-    color: "text-[#777BB4]",
-    description: "Server-Side Development",
-    level: "Intermediate"
-  },
-  {
-    name: "JavaScript",
-    icon: SiJavascript,
-    color: "text-[#F7DF1E]",
-    description: "Web Development",
-    level: "Advanced"
-  },
-  {
-    name: "TypeScript",
-    icon: SiTypescript,
-    color: "text-[#3178C6]",
-    description: "Type-Safe Development",
-    level: "Advanced"
-  },
-  {
-    name: "Node.js",
-    icon: SiNodedotjs,
-    color: "text-[#339933]",
-    description: "Server-Side Development",
-    level: "Intermediate"
-  },
-  {
-    name: "MongoDB",
-    icon: SiMongodb,
-    color: "text-[#47A248]",
-    description: "Database Management",
-    level: "Intermediate"
-  },
-  {
-    name: "Docker",
-    icon: SiDocker,
-    color: "text-[#2496ED]",
-    description: "Containerization",
-    level: "Intermediate"
-  },
-  {
-    name: "GitHub",
-    icon: SiGithub,
-    color: "text-gray-900 dark:text-white",
-    description: "Version Control",
-    level: "Advanced"
-  }
-];
-
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 }
-};
+import { CodePlayground } from "./ui/CodePlayground";
 
 class Particle {
   x: number;
@@ -164,7 +49,7 @@ class Particle {
   }
 }
 
-export default function TechStack() {
+export default function CodeExamples() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particles = useRef<Particle[]>([]);
   const animationFrameId = useRef<number>();
@@ -270,63 +155,47 @@ export default function TechStack() {
   }, []);
 
   return (
-    <section className="relative py-20 bg-[#0B1120]">
+    <section id="code-examples" className="relative py-20 bg-[#0B1120]">
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full"
       />
-      <div className="relative z-10 container mx-auto px-4">
-        <div className="text-center mb-16">
-          <motion.h2 
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="text-4xl font-bold text-white mb-4"
-          >
-            Technologies I Work With
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="text-gray-400"
-          >
-            My tech stack includes modern and industry-standard technologies
-          </motion.p>
-        </div>
-
+      <div className="relative z-10 container mx-auto px-6">
         <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
+          className="max-w-7xl mx-auto"
         >
-          {technologies.map((tech) => (
-            <motion.div
-              key={tech.name}
-              variants={item}
-              whileHover={{ scale: 1.05 }}
-              className="relative group bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+          <div className="text-center mb-12">
+            <motion.h2
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 mb-4"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              
-              <div className="relative flex flex-col items-center">
-                <tech.icon className={`w-12 h-12 ${tech.color} mb-4 transition-transform group-hover:scale-110`} />
-                <h3 className="text-lg font-semibold text-white mb-2">{tech.name}</h3>
-                <p className="text-sm text-gray-400 text-center mb-3">{tech.description}</p>
-                <div className="flex items-center">
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium
-                    ${tech.level === "Advanced" ? "bg-green-900/50 text-green-200" :
-                      "bg-blue-900/50 text-blue-200"}`}>
-                    {tech.level}
-                  </span>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              Code Examples
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="text-lg text-gray-400"
+            >
+              Interactive examples showcasing my coding style and technical expertise
+            </motion.p>
+          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            viewport={{ once: true }}
+          >
+            <CodePlayground />
+          </motion.div>
         </motion.div>
       </div>
     </section>

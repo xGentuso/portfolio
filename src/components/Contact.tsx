@@ -1,123 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { 
-  SiReact, 
-  SiSwift, 
-  SiKotlin,
-  SiJavascript, 
-  SiTypescript, 
-  SiNodedotjs, 
-  SiMongodb, 
-  SiDocker, 
-  SiGithub,
-  SiNextdotjs,
-  SiPhp 
-} from "react-icons/si";
-import { DiJava } from "react-icons/di";
-import { useEffect, useRef } from "react";
-
-const technologies = [
-  {
-    name: "React",
-    icon: SiReact,
-    color: "text-[#61DAFB]",
-    description: "Frontend Development",
-    level: "Advanced"
-  },
-  {
-    name: "Next.js",
-    icon: SiNextdotjs,
-    color: "text-[#000000] dark:text-white",
-    description: "React Framework",
-    level: "Advanced"
-  },
-  {
-    name: "Swift",
-    icon: SiSwift,
-    color: "text-[#F05138]",
-    description: "iOS Development",
-    level: "Intermediate"
-  },
-  {
-    name: "Kotlin",
-    icon: SiKotlin,
-    color: "text-[#7F52FF]",
-    description: "Android Development",
-    level: "Intermediate"
-  },
-  {
-    name: "Java",
-    icon: DiJava,
-    color: "text-[#007396]",
-    description: "Backend Development",
-    level: "Advanced"
-  },
-  {
-    name: "PHP",
-    icon: SiPhp,
-    color: "text-[#777BB4]",
-    description: "Server-Side Development",
-    level: "Intermediate"
-  },
-  {
-    name: "JavaScript",
-    icon: SiJavascript,
-    color: "text-[#F7DF1E]",
-    description: "Web Development",
-    level: "Advanced"
-  },
-  {
-    name: "TypeScript",
-    icon: SiTypescript,
-    color: "text-[#3178C6]",
-    description: "Type-Safe Development",
-    level: "Advanced"
-  },
-  {
-    name: "Node.js",
-    icon: SiNodedotjs,
-    color: "text-[#339933]",
-    description: "Server-Side Development",
-    level: "Intermediate"
-  },
-  {
-    name: "MongoDB",
-    icon: SiMongodb,
-    color: "text-[#47A248]",
-    description: "Database Management",
-    level: "Intermediate"
-  },
-  {
-    name: "Docker",
-    icon: SiDocker,
-    color: "text-[#2496ED]",
-    description: "Containerization",
-    level: "Intermediate"
-  },
-  {
-    name: "GitHub",
-    icon: SiGithub,
-    color: "text-gray-900 dark:text-white",
-    description: "Version Control",
-    level: "Advanced"
-  }
-];
-
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 }
-};
+import { useEffect, useRef, useState } from "react";
+import { FiSend } from "react-icons/fi";
 
 class Particle {
   x: number;
@@ -164,11 +49,12 @@ class Particle {
   }
 }
 
-export default function TechStack() {
+export default function Contact() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particles = useRef<Particle[]>([]);
   const animationFrameId = useRef<number>();
   const mousePosition = useRef({ x: 0, y: 0 });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -269,64 +155,95 @@ export default function TechStack() {
     };
   }, []);
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    // Add your form submission logic here
+    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulated delay
+    setIsSubmitting(false);
+  };
+
   return (
-    <section className="relative py-20 bg-[#0B1120]">
+    <section id="contact" className="relative py-20 bg-[#0B1120]">
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full"
       />
-      <div className="relative z-10 container mx-auto px-4">
-        <div className="text-center mb-16">
-          <motion.h2 
+      <div className="relative z-10 container mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="max-w-2xl mx-auto"
+        >
+          <motion.h2
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="text-4xl font-bold text-white mb-4"
+            className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 mb-4 text-center"
           >
-            Technologies I Work With
+            Send me a message!
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-gray-400"
+            className="text-lg text-gray-400 mb-12 text-center"
           >
-            My tech stack includes modern and industry-standard technologies
+            Got a question or proposal, or just want to say hello? Go ahead.
           </motion.p>
-        </div>
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
-        >
-          {technologies.map((tech) => (
-            <motion.div
-              key={tech.name}
-              variants={item}
-              whileHover={{ scale: 1.05 }}
-              className="relative group bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              
-              <div className="relative flex flex-col items-center">
-                <tech.icon className={`w-12 h-12 ${tech.color} mb-4 transition-transform group-hover:scale-110`} />
-                <h3 className="text-lg font-semibold text-white mb-2">{tech.name}</h3>
-                <p className="text-sm text-gray-400 text-center mb-3">{tech.description}</p>
-                <div className="flex items-center">
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium
-                    ${tech.level === "Advanced" ? "bg-green-900/50 text-green-200" :
-                      "bg-blue-900/50 text-blue-200"}`}>
-                    {tech.level}
-                  </span>
-                </div>
+          <motion.form
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            viewport={{ once: true }}
+            className="space-y-6"
+            onSubmit={handleSubmit}
+          >
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-gray-300 mb-2 text-sm">Your Name</label>
+                <input
+                  type="text"
+                  className="w-full px-4 py-3 rounded-lg bg-gray-800/50 border border-gray-700/50 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-500 backdrop-blur-sm"
+                  placeholder="Enter your name"
+                  required
+                />
               </div>
-            </motion.div>
-          ))}
+              <div>
+                <label className="block text-gray-300 mb-2 text-sm">Email Address</label>
+                <input
+                  type="email"
+                  className="w-full px-4 py-3 rounded-lg bg-gray-800/50 border border-gray-700/50 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-500 backdrop-blur-sm"
+                  placeholder="Enter your email"
+                  required
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-gray-300 mb-2 text-sm">Your Message</label>
+              <textarea
+                className="w-full px-4 py-3 rounded-lg bg-gray-800/50 border border-gray-700/50 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-500 backdrop-blur-sm"
+                rows={6}
+                placeholder="Hi, I think we need a design system for our products at Company X. How soon can you hop on to discuss this?"
+                required
+              ></textarea>
+            </div>
+            <motion.button
+              type="submit"
+              className="w-full md:w-auto px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed group"
+              disabled={isSubmitting}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <span>SHOOT</span>
+              <FiSend className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+            </motion.button>
+          </motion.form>
         </motion.div>
       </div>
     </section>
