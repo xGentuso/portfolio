@@ -8,8 +8,8 @@ import { FiGithub, FiLinkedin, FiMail, FiCode, FiStar, FiCode as FiCodeIcon, FiL
 import { AchievementCard } from "@/components/ui/AchievementCard";
 import { CodePlayground } from "@/components/ui/CodePlayground";
 import { Hero } from "@/components/Hero";
+import TechStack from "@/components/TechStack";
 
-// Add before the technologies array
 interface Project {
   title: string;
   description: string;
@@ -19,21 +19,6 @@ interface Project {
   type: string;
 }
 
-// Technologies to showcase
-const technologies = [
-  { name: "React", icon: "react", color: "#61DAFB" },
-  { name: "Swift", icon: "swift", color: "#F05138" },
-  { name: "Kotlin", icon: "kotlin", color: "#7F52FF" },
-  { name: "Java", icon: "java", color: "#007396" },
-  { name: "JavaScript", icon: "javascript", color: "#F7DF1E" },
-  { name: "TypeScript", icon: "typescript", color: "#3178C6" },
-  { name: "Node.js", icon: "nodejs", color: "#339933" },
-  { name: "MongoDB", icon: "mongodb", color: "#47A248" },
-  { name: "Docker", icon: "docker", color: "#2496ED" },
-  { name: "GitHub", icon: "github", color: "#181717" },
-];
-
-// Update the featuredProjects array type
 const featuredProjects: Project[] = [
   {
     title: "Petopia",
@@ -76,117 +61,6 @@ const featuredProjects: Project[] = [
     technologies: ["React", "Node.js", "WebSocket", "Crypto APIs"],
     githubLink: "https://github.com/xGentuso/CryptoExchange",
     type: "Full Stack"
-  }
-];
-
-const skillCategories = [
-  {
-    title: "Frontend Development",
-    description: "Building responsive and accessible web applications",
-    skills: [
-      {
-        name: "React & Next.js",
-        proficiency: "Advanced",
-        highlights: [
-          "Component Architecture",
-          "State Management",
-          "Server-Side Rendering"
-        ],
-        projects: ["Portfolio Website", "CryptoExchange"]
-      },
-      {
-        name: "TypeScript",
-        proficiency: "Advanced",
-        highlights: [
-          "Type Safety",
-          "Interface Design",
-          "Generic Types"
-        ],
-        projects: ["Portfolio Website"]
-      },
-      {
-        name: "UI/UX Implementation",
-        proficiency: "Intermediate",
-        highlights: [
-          "Responsive Design",
-          "Accessibility",
-          "Animation"
-        ],
-        projects: ["Portfolio Website", "CryptoExchange"]
-      }
-    ]
-  },
-  {
-    title: "Mobile Development",
-    description: "Creating native iOS and Android applications",
-    skills: [
-      {
-        name: "iOS (Swift)",
-        proficiency: "Advanced",
-        highlights: [
-          "UIKit & SwiftUI",
-          "Core Data",
-          "iOS Design Patterns"
-        ],
-        projects: ["Petopia", "Weather App", "Grocerly", "HydrationTracker"]
-      },
-      {
-        name: "Android (Kotlin)",
-        proficiency: "Intermediate",
-        highlights: [
-          "Android SDK",
-          "Jetpack Compose",
-          "Material Design"
-        ],
-        projects: ["Coming Soon"]
-      },
-      {
-        name: "Mobile Architecture",
-        proficiency: "Intermediate",
-        highlights: [
-          "MVVM Pattern",
-          "State Management",
-          "Native APIs"
-        ],
-        projects: ["Petopia", "Weather App", "HydrationTracker"]
-      }
-    ]
-  },
-  {
-    title: "Backend & DevOps",
-    description: "Building scalable server-side applications and deployment pipelines",
-    skills: [
-      {
-        name: "Node.js & Express",
-        proficiency: "Intermediate",
-        highlights: [
-          "REST APIs",
-          "Authentication",
-          "Database Integration"
-        ],
-        projects: ["CryptoExchange"]
-      },
-      {
-        name: "Docker & Deployment",
-        proficiency: "Intermediate",
-        highlights: [
-          "Containerization",
-          "CI/CD Pipelines",
-          "Cloud Deployment"
-        ],
-        projects: ["Portfolio Website"]
-      },
-      {
-        name: "Database Management",
-        proficiency: "Intermediate",
-        highlights: [
-          "MongoDB",
-          "Data Modeling",
-          "Query Optimization"
-        ],
-        projects: ["CryptoExchange", "Petopia"]
-      }
-    ]
   }
 ];
 
@@ -233,7 +107,10 @@ export default function Home() {
       <Hero />
       
       {/* About Section */}
-      <section id="about" className="min-h-screen bg-gradient-to-b from-white to-indigo-50 dark:from-gray-900 dark:to-indigo-950/30 flex items-center py-20">
+      <Section
+        id="about"
+        className="py-20"
+      >
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0 }}
@@ -300,113 +177,16 @@ export default function Home() {
             </motion.div>
           </motion.div>
         </div>
-      </section>
+      </Section>
 
-      {/* Skills & Tech Stack Section */}
-      <section id="skills" className="min-h-screen bg-indigo-50 dark:bg-gray-800 flex items-center py-20">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-5xl font-bold text-indigo-600 dark:text-indigo-400 mb-12">Skills & Technologies</h2>
-            
-            {/* Tech Stack Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-16">
-              {technologies.map((tech, index) => (
-                <motion.div
-                  key={tech.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="flex flex-col items-center"
-                >
-                  <div 
-                    className="w-16 h-16 rounded-xl flex items-center justify-center mb-3 bg-white dark:bg-gray-700 shadow-md"
-                    style={{ boxShadow: `0 4px 14px rgba(${tech.color.replace('#', '').match(/.{1,2}/g)?.map(hex => parseInt(hex, 16)).join(', ')}, 0.15)` }}
-                  >
-                    <div className="tech-icon" style={{ color: tech.color }}>
-                      <img
-                        src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${tech.icon}/${tech.icon}-original.svg`}
-                        alt={tech.name}
-                        className="w-10 h-10"
-                        onError={(e) => {
-                          e.currentTarget.src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${tech.icon}/${tech.icon}-plain.svg`;
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{tech.name}</span>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Skills Categories */}
-            <div className="grid md:grid-cols-3 gap-8">
-              {skillCategories.map((category, categoryIndex) => (
-                <motion.div
-                  key={category.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: categoryIndex * 0.2 }}
-                  className="bg-white dark:bg-gray-700 p-6 rounded-2xl shadow-sm"
-                >
-                  <h3 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mb-2">{category.title}</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-6">{category.description}</p>
-                  <div className="space-y-6">
-                    {category.skills.map((skill, index) => (
-                      <motion.div
-                        key={skill.name}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.3, delay: index * 0.1 }}
-                        className="group"
-                      >
-                        <div className="flex justify-between items-center mb-2">
-                          <span className="text-sm font-medium text-gray-700 dark:text-gray-200">{skill.name}</span>
-                          <span className={`text-xs px-2 py-1 rounded-full ${
-                            skill.proficiency === 'Advanced' ? 'bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300' :
-                            skill.proficiency === 'Intermediate' ? 'bg-cyan-100 dark:bg-cyan-900/60 text-cyan-700 dark:text-cyan-300' :
-                            'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
-                          }`}>
-                            {skill.proficiency}
-                          </span>
-                        </div>
-                        <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3 transform transition-all duration-300 group-hover:scale-102 group-hover:shadow-md">
-                          <div className="text-xs text-gray-600 dark:text-gray-300 mb-2">
-                            <span className="font-medium">Key Focus Areas:</span>
-                            <div className="flex flex-wrap gap-1 mt-1">
-                              {skill.highlights.map((highlight) => (
-                                <span key={highlight} className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full">
-                                  {highlight}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                          {skill.projects.length > 0 && (
-                            <div className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-                              <span className="font-medium">Related Projects: </span>
-                              {skill.projects.join(", ")}
-                            </div>
-                          )}
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      {/* Skills Section */}
+      <TechStack />
 
       {/* Projects Section */}
-      <section id="projects" className="min-h-screen bg-white dark:bg-gray-900 flex items-center py-20">
+      <Section
+        id="projects"
+        className="py-20"
+      >
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0 }}
@@ -507,10 +287,13 @@ export default function Home() {
             </div>
           </motion.div>
         </div>
-      </section>
+      </Section>
 
       {/* Code Examples Section */}
-      <section id="code-playground" className="min-h-screen bg-indigo-50 dark:bg-gray-800 flex items-center py-20">
+      <Section
+        id="code-playground"
+        className="py-20"
+      >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
@@ -522,10 +305,13 @@ export default function Home() {
           </div>
           <CodePlayground />
         </div>
-      </section>
+      </Section>
 
       {/* Contact Section */}
-      <section id="contact" className="min-h-screen bg-indigo-50 dark:bg-gray-800 flex items-center py-20">
+      <Section
+        id="contact"
+        className="py-20"
+      >
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0 }}
@@ -574,7 +360,7 @@ export default function Home() {
             </form>
           </motion.div>
         </div>
-      </section>
+      </Section>
     </div>
   );
 }
