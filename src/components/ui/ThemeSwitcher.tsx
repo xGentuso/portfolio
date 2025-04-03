@@ -1,15 +1,25 @@
 "use client";
 
-import { useTheme } from "@/lib/theme";
+import { useTheme } from "next-themes";
 import { FiSun, FiMoon } from "react-icons/fi";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export function ThemeSwitcher() {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <motion.button
-      onClick={toggleTheme}
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       className="fixed top-4 right-4 p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}

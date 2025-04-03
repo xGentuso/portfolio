@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/lib/theme";
+import { ThemeProvider } from "next-themes";
 import { ThemeSwitcher } from "@/components/ui/ThemeSwitcher";
 import CommandPalette from "@/components/ui/CommandPalette";
 import Footer from "@/components/layout/Footer";
@@ -27,11 +27,11 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="dark"
           enableSystem={false}
-          disableTransitionOnChange
         >
           <ParticleBackground />
           <div style={{ position: 'relative', zIndex: 1 }}>
             {children}
+            <Footer />
           </div>
           <div className="fixed top-6 right-6" style={{ zIndex: 50 }}>
             <ThemeSwitcher />
