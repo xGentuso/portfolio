@@ -175,22 +175,32 @@ export default function Contact() {
     setIsSubmitting(true);
     
     try {
-      // Create mailto URL with form data
-      const subject = `Portfolio Contact from ${formData.name}`;
-      const body = `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`;
-      const mailtoUrl = `mailto:ryan.mota@triosstudent.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      
-      // Open default email client
-      window.location.href = mailtoUrl;
-      
-      // Reset form
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message');
+      }
+
+      // Reset form on success
       setFormData({
         name: "",
         email: "",
         message: ""
       });
+
+      // Show success message (you can add a toast notification here)
+      alert('Message sent successfully!');
     } catch (error) {
-      console.error('Error sending email:', error);
+      console.error('Error sending message:', error);
+      alert('Failed to send message. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
