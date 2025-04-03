@@ -190,7 +190,7 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* Skills Section */}
+      {/* Tech Stack Section */}
       <TechStack />
 
       {/* Projects Section */}
