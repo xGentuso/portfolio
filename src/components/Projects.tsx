@@ -167,58 +167,6 @@ export default function Projects() {
             </motion.div>
           ))}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="mt-16 text-center"
-        >
-          <Link
-            href="https://github.com/xGentuso?tab=repositories"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-500/10 text-blue-400 rounded-full border border-blue-500/20 hover:bg-blue-500/20 transition-colors duration-300"
-          >
-            <span>Browse More Projects</span>
-            <FiExternalLink className="w-4 h-4" />
-          </Link>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="mt-20"
-        >
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-semibold text-white mb-2">
-              GitHub Contributions
-            </h3>
-            <p className="text-gray-400">
-              A snapshot of my coding activity
-            </p>
-          </div>
-          
-          <div className="bg-gray-800/50 rounded-xl overflow-hidden backdrop-blur-sm border border-gray-700/50">
-            <div className="p-4 md:p-6">
-              <div className="w-full overflow-hidden rounded-lg bg-[#0D1117] flex items-center justify-center py-4">
-                <div className="w-[900px] max-w-full">
-                  <img
-                    src={`https://ghchart.rshah.org/409ba5/xGentuso`}
-                    alt="GitHub Contribution Graph"
-                    className="w-full h-auto"
-                    style={{
-                      filter: 'contrast(95%) brightness(95%)'
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

@@ -53,3 +53,15 @@ body {
 }
 
 /* Remove section-specific scroll styling to prevent conflicts */
+
+/* Code block styling */
+pre[class*="language-"],
+code[class*="language-"] {
+  background: black !important;
+}
+
+pre[class*="language-"] {
+  padding: 1.5rem !important;
+  margin: 0 !important;
+  overflow: auto !important;
+}
