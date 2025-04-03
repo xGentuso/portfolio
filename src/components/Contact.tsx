@@ -55,6 +55,11 @@ export default function Contact() {
   const animationFrameId = useRef<number>();
   const mousePosition = useRef({ x: 0, y: 0 });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: ""
+  });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -155,12 +160,40 @@ export default function Contact() {
     };
   }, []);
 
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Add your form submission logic here
-    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulated delay
-    setIsSubmitting(false);
+    
+    try {
+      // Create mailto URL with form data
+      const subject = `Portfolio Contact from ${formData.name}`;
+      const body = `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`;
+      const mailtoUrl = `mailto:ryan.mota@triosstudent.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      
+      // Open default email client
+      window.location.href = mailtoUrl;
+      
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        message: ""
+      });
+    } catch (error) {
+      console.error('Error sending email:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -209,6 +242,9 @@ export default function Contact() {
                 <label className="block text-gray-300 mb-2 text-sm">Your Name</label>
                 <input
                   type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
                   className="w-full px-4 py-3 rounded-lg bg-gray-800/50 border border-gray-700/50 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-500 backdrop-blur-sm"
                   placeholder="Enter your name"
                   required
@@ -218,6 +254,9 @@ export default function Contact() {
                 <label className="block text-gray-300 mb-2 text-sm">Email Address</label>
                 <input
                   type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   className="w-full px-4 py-3 rounded-lg bg-gray-800/50 border border-gray-700/50 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-500 backdrop-blur-sm"
                   placeholder="Enter your email"
                   required
@@ -227,6 +266,9 @@ export default function Contact() {
             <div>
               <label className="block text-gray-300 mb-2 text-sm">Your Message</label>
               <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
                 className="w-full px-4 py-3 rounded-lg bg-gray-800/50 border border-gray-700/50 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-500 backdrop-blur-sm"
                 rows={6}
                 placeholder="Hi, I think we need a design system for our products at Company X. How soon can you hop on to discuss this?"
