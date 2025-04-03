@@ -1,26 +1,40 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-// Create a transporter using Gmail with more secure settings
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true, // use SSL
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  },
-  tls: {
-    rejectUnauthorized: false // Only for development
+// Validate environment variables
+const validateEnvVariables = () => {
+  if (!process.env.EMAIL_USER) {
+    throw new Error('EMAIL_USER is not defined in environment variables');
   }
-});
+  if (!process.env.EMAIL_PASS) {
+    throw new Error('EMAIL_PASS is not defined in environment variables');
+  }
+  return true;
+};
+
+// Create a transporter using Gmail with more secure settings
+const createTransporter = () => {
+  validateEnvVariables();
+  
+  return nodemailer.createTransport({
+    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
+    },
+    tls: {
+      rejectUnauthorized: true
+    }
+  });
+};
 
 export async function POST(request: Request) {
   try {
-    // Log environment variables (remove in production)
-    console.log('Attempting to send email with following configuration:');
-    console.log('Email User:', process.env.EMAIL_USER);
-    console.log('Email Pass length:', process.env.EMAIL_PASS?.length || 0);
+    // Validate environment variables first
+    validateEnvVariables();
 
     const { name, email, message } = await request.json();
 
@@ -32,16 +46,19 @@ export async function POST(request: Request) {
       );
     }
 
+    // Create transporter
+    const transporter = createTransporter();
+
     // Verify SMTP connection before sending
     try {
       await transporter.verify();
       console.log('SMTP connection verified successfully');
-    } catch (verifyError: any) {
-      console.error('SMTP Verification Error:', verifyError);
+    } catch (error) {
+      console.error('SMTP Verification Error:', error);
       return NextResponse.json(
         { 
           error: 'Email service configuration error', 
-          details: verifyError?.message || 'Unknown error occurred'
+          details: error instanceof Error ? error.message : 'Failed to verify SMTP connection'
         },
         { status: 500 }
       );
@@ -64,17 +81,13 @@ export async function POST(request: Request) {
       message: 'Email sent successfully',
       messageId: info.messageId 
     });
-  } catch (error: any) {
-    console.error('Detailed error:', {
-      name: error.name,
-      message: error.message,
-      stack: error.stack
-    });
-
+  } catch (error) {
+    console.error('Detailed error:', error);
+    
     return NextResponse.json(
       { 
         error: 'Failed to send email',
-        details: error?.message || 'Unknown error occurred'
+        details: error instanceof Error ? error.message : 'An unknown error occurred'
       },
       { status: 500 }
     );
