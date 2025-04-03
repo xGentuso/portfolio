@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FiGithub, FiExternalLink } from "react-icons/fi";
+import { FiGithub, FiExternalLink, FiFolder } from "react-icons/fi";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -166,6 +166,17 @@ export default function Projects() {
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/5 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
             </motion.div>
           ))}
+        </div>
+        <div className="mt-12 text-center">
+          <Link
+            href="https://github.com/xGentuso"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+          >
+            <FiGithub className="mr-2" />
+            Visit GitHub Profile
+          </Link>
         </div>
       </div>
     </section>
