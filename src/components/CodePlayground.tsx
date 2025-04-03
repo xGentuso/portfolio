@@ -100,37 +100,37 @@ const LiveTodoList = () => {
 
   return (
     <div className="w-full max-w-md mx-auto bg-[#1E2330] rounded-xl shadow-xl overflow-hidden">
-      <div className="p-6">
-        <h3 className="text-gray-400 text-sm font-medium mb-4">Live Preview</h3>
+      <div className="p-4">
+        <h3 className="text-gray-400 text-xs font-medium mb-2">Live Preview</h3>
         
-        <form onSubmit={addTodo} className="flex gap-2 mb-6">
+        <form onSubmit={addTodo} className="flex gap-2 mb-4">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Add new task..."
-            className="flex-1 bg-[#141824] text-gray-100 placeholder-gray-500 px-4 py-2 rounded-lg border border-gray-700/50 focus:outline-none focus:border-blue-500/50 transition-colors"
+            className="flex-1 bg-[#141824] text-gray-100 placeholder-gray-500 px-3 py-1.5 text-sm rounded-lg border border-gray-700/50 focus:outline-none focus:border-blue-500/50 transition-colors"
           />
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center"
+            className="px-3 py-1.5 bg-blue-500 text-white text-sm rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center"
           >
             Add
           </button>
         </form>
 
-        <div className="space-y-2">
+        <div className="space-y-1.5">
           {todos.map(todo => (
             <motion.div
               key={todo.id}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="group flex items-center gap-3 p-3 bg-[#141824] rounded-lg border border-gray-700/50"
+              className="group flex items-center gap-2 p-2 bg-[#141824] rounded-lg border border-gray-700/50"
             >
               <button
                 onClick={() => toggleTodo(todo.id)}
-                className={`flex-shrink-0 w-5 h-5 rounded border-2 ${
+                className={`flex-shrink-0 w-4 h-4 rounded border-2 ${
                   todo.completed 
                     ? 'bg-blue-500 border-blue-500' 
                     : 'border-gray-600 hover:border-blue-500'
@@ -153,7 +153,7 @@ const LiveTodoList = () => {
                 )}
               </button>
               
-              <span className={`flex-1 text-sm ${
+              <span className={`flex-1 text-xs ${
                 todo.completed 
                   ? 'text-gray-500 line-through' 
                   : 'text-gray-200'
@@ -167,7 +167,7 @@ const LiveTodoList = () => {
               >
                 <motion.svg
                   whileHover={{ scale: 1.1 }}
-                  className="w-4 h-4"
+                  className="w-3 h-3"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -180,7 +180,7 @@ const LiveTodoList = () => {
           ))}
           
           {todos.length === 0 && (
-            <div className="text-center py-8 text-gray-500 text-sm">
+            <div className="text-center py-4 text-gray-500 text-xs">
               No tasks yet. Add one to get started!
             </div>
           )}
@@ -439,16 +439,16 @@ export default function CodePlayground() {
   }, []);
 
   return (
-    <section className="py-20">
+    <section id="code-playground" className="py-20">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-16 pt-24"
         >
-          <h2 className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 mb-4">
+          <h2 className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 mb-4 leading-relaxed py-2">
             Code Playground
           </h2>
           <p className="text-lg text-gray-400">
@@ -456,13 +456,13 @@ export default function CodePlayground() {
           </p>
         </motion.div>
 
-        <div className="bg-[#151B28]/80 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50">
-          <div className="flex space-x-8">
+        <div className="max-w-4xl mx-auto bg-[#151B28]/80 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50">
+          <div className="flex space-x-6">
             {codeExamples.map((example) => (
               <button
                 key={example.id}
                 onClick={() => setActiveTab(example.id)}
-                className={`py-2 text-base transition-colors duration-200 relative ${
+                className={`py-1.5 text-sm transition-colors duration-200 relative ${
                   activeTab === example.id
                     ? "text-[#6B8AFF]"
                     : "text-[#8F9BAB] hover:text-gray-300"
@@ -475,27 +475,28 @@ export default function CodePlayground() {
               </button>
             ))}
           </div>
-
-          <div className="mt-6">
+          
+          <div className="mt-4">
             <div className="flex items-center justify-between">
-              <span className="text-[#8F9BAB] text-sm">{activeExample?.description}</span>
+              <span className="text-[#8F9BAB] text-xs">{activeExample?.description}</span>
               <button
                 onClick={() => navigator.clipboard.writeText(activeExample?.code || "")}
                 className="text-[#8F9BAB] hover:text-white transition-colors"
               >
-                <FiCopy className="w-4 h-4" />
+                <FiCopy className="w-3.5 h-3.5" />
               </button>
             </div>
             
-            <div className="mt-4 bg-black rounded-lg overflow-hidden">
+            <div className="mt-3 bg-black rounded-lg overflow-hidden max-h-[800px] overflow-y-auto">
               {mounted && (
                 <SyntaxHighlighter
                   language={activeExample?.language || 'typescript'}
                   style={oneDark}
                   customStyle={{
                     margin: 0,
-                    padding: '1.5rem',
-                    background: 'black'
+                    padding: '1rem',
+                    background: 'black',
+                    fontSize: '0.875rem'
                   }}
                 >
                   {activeExample?.code || ''}
@@ -504,9 +505,9 @@ export default function CodePlayground() {
             </div>
 
             {activeExample?.LivePreview && mounted && (
-              <div className="mt-6">
-                <div className="flex justify-center mb-4">
-                  <span className="text-[#8F9BAB] text-sm px-3 py-1 rounded-md bg-[#1B1F23]">Live Preview</span>
+              <div className="mt-4">
+                <div className="flex justify-center mb-2">
+                  <span className="text-[#8F9BAB] text-xs px-2 py-0.5 rounded-md bg-[#1B1F23]">Live Preview</span>
                 </div>
                 <div className="flex justify-center">
                   <activeExample.LivePreview />
