@@ -6,11 +6,10 @@ import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
 import { FiGithub, FiLinkedin, FiMail, FiCode, FiStar, FiCode as FiCodeIcon, FiLayout, FiSmartphone, FiExternalLink, FiFolder } from "react-icons/fi";
 import { AchievementCard } from "@/components/ui/AchievementCard";
-import { CodePlayground } from "@/components/ui/CodePlayground";
 import { Hero } from "@/components/Hero";
 import TechStack from "@/components/TechStack";
 import Projects from "@/components/Projects";
-import CodeExamples from "@/components/CodeExamples";
+import CodePlayground from "@/components/CodePlayground";
 import Contact from "@/components/Contact";
 
 interface Project {
@@ -196,8 +195,8 @@ export default function Home() {
       {/* Projects Section */}
       <Projects />
 
-      {/* Code Examples Section */}
-      <CodeExamples />
+      {/* Code Playground Section */}
+      <CodePlayground />
 
       {/* Contact Section */}
       <Contact />

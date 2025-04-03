@@ -429,7 +429,7 @@ router.get('/api/users/:id', async (req, res) => {
   }
 ];
 
-export default function CodeExamples() {
+export default function CodePlayground() {
   const [activeTab, setActiveTab] = useState("react");
   const [mounted, setMounted] = useState(false);
   const activeExample = codeExamples.find(example => example.id === activeTab);
@@ -439,8 +439,23 @@ export default function CodeExamples() {
   }, []);
 
   return (
-    <div className="w-full py-20">
-      <div className="max-w-4xl mx-auto px-4">
+    <section className="py-20">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 mb-4">
+            Code Playground
+          </h2>
+          <p className="text-lg text-gray-400">
+            Interactive examples of my development work
+          </p>
+        </motion.div>
+
         <div className="bg-[#151B28]/80 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50">
           <div className="flex space-x-8">
             {codeExamples.map((example) => (
@@ -501,6 +516,6 @@ export default function CodeExamples() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 } 
