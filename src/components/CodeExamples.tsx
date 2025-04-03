@@ -83,13 +83,13 @@ function LiveTodoList() {
     { id: 2, text: "Build Portfolio", completed: false },
   ]);
   const [newTodo, setNewTodo] = useState("");
-  const [nextId, setNextId] = useState(3); // Counter for generating IDs
+  const [nextId, setNextId] = useState(3);
 
   const addTodo = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newTodo.trim()) return;
     setTodos([...todos, { id: nextId, text: newTodo, completed: false }]);
-    setNextId(nextId + 1); // Increment the ID counter
+    setNextId(nextId + 1);
     setNewTodo("");
   };
 
@@ -104,53 +104,50 @@ function LiveTodoList() {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 p-4 bg-gray-800/50 rounded-lg w-full max-w-md mx-auto">
-      <form onSubmit={addTodo} className="flex gap-2 w-full">
+    <div className="w-full max-w-md mx-auto bg-gray-800 rounded-lg p-6">
+      <form onSubmit={addTodo} className="flex gap-2 mb-4">
         <input
           type="text"
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
           placeholder="Add new todo..."
-          className="flex-1 px-4 py-2 bg-gray-700/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+          className="flex-1 px-4 py-2 rounded-lg bg-gray-700 text-white"
         />
         <button
           type="submit"
-          className="px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors"
+          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
         >
-          <FiPlus />
+          Add
         </button>
       </form>
-      <div className="w-full space-y-2">
-        <AnimatePresence>
-          {todos.map(todo => (
-            <motion.div
-              key={todo.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, x: -100 }}
-              className="flex items-center gap-2 w-full bg-gray-700/30 p-3 rounded-lg group"
+      
+      <motion.ul className="space-y-2">
+        {todos.map(todo => (
+          <motion.li
+            key={todo.id}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, x: -100 }}
+            className="flex items-center gap-2 p-2 bg-gray-700 rounded-lg"
+          >
+            <input
+              type="checkbox"
+              checked={todo.completed}
+              onChange={() => toggleTodo(todo.id)}
+              className="w-5 h-5"
+            />
+            <span className={`flex-1 ${todo.completed ? 'line-through text-gray-400' : 'text-white'}`}>
+              {todo.text}
+            </span>
+            <button
+              onClick={() => deleteTodo(todo.id)}
+              className="p-1 text-red-400 hover:text-red-300"
             >
-              <button
-                onClick={() => toggleTodo(todo.id)}
-                className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${
-                  todo.completed ? 'bg-green-500/20 border-green-500/50' : 'border-gray-500'
-                }`}
-              >
-                {todo.completed && <FiCheck className="text-green-500 w-3 h-3" />}
-              </button>
-              <span className={`flex-1 ${todo.completed ? 'line-through text-gray-500' : 'text-white'}`}>
-                {todo.text}
-              </span>
-              <button
-                onClick={() => deleteTodo(todo.id)}
-                className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-300 transition-opacity"
-              >
-                <FiTrash2 />
-              </button>
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
+              Delete
+            </button>
+          </motion.li>
+        ))}
+      </motion.ul>
     </div>
   );
 }
@@ -172,9 +169,8 @@ function LiveAnimatedCard() {
           transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
           style={{ transformStyle: "preserve-3d" }}
         >
-          {/* Front of card */}
           <div 
-            className="absolute w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl p-6 text-white flex flex-col items-center justify-center backface-hidden"
+            className="absolute w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl p-6 text-white flex flex-col items-center justify-center"
             style={{ 
               backfaceVisibility: "hidden",
               WebkitBackfaceVisibility: "hidden"
@@ -185,7 +181,6 @@ function LiveAnimatedCard() {
             <p className="text-sm opacity-80">Click to flip</p>
           </div>
 
-          {/* Back of card */}
           <div 
             className="absolute w-full h-full bg-gradient-to-br from-purple-600 to-blue-500 rounded-xl p-6 text-white flex flex-col items-center justify-center"
             style={{ 
@@ -214,6 +209,7 @@ const codeExamples = [
     id: "react",
     title: "React Todo List",
     description: "Interactive todo list with animations and state management",
+    language: "typescript",
     code: `function TodoList() {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
@@ -280,13 +276,13 @@ const codeExamples = [
     </div>
   );
 }`,
-    language: "typescript",
     LivePreview: LiveTodoList
   },
   {
     id: "animated",
     title: "Animated Card",
     description: "Interactive card with 3D flip animation",
+    language: "swift",
     code: `struct FlipCard: View {
     @State private var isFlipped = false
     
@@ -359,7 +355,6 @@ struct Card: View {
         }
     }
 }`,
-    language: "swift",
     LivePreview: LiveAnimatedCard
   },
   {
@@ -457,7 +452,9 @@ export default function CodeExamples() {
 
             {activeExample?.LivePreview && mounted && (
               <div className="mt-6">
-                <p className="text-[#6B8AFF] text-sm mb-4">Live Preview</p>
+                <div className="flex justify-center mb-4">
+                  <span className="text-[#8F9BAB] text-sm px-3 py-1 rounded-md bg-[#1B1F23]">Live Preview</span>
+                </div>
                 <div className="flex justify-center">
                   <activeExample.LivePreview />
                 </div>
