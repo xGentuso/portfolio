@@ -11,6 +11,7 @@ import TechStack from "@/components/TechStack";
 import Projects from "@/components/Projects";
 import CodePlayground from "@/components/CodePlayground";
 import Contact from "@/components/Contact";
+import AIChat from "@/components/AIChat";
 
 interface Project {
   title: string;
@@ -197,6 +198,34 @@ export default function Home() {
 
       {/* Code Playground Section */}
       <CodePlayground />
+
+      {/* AI Chat Section */}
+      <Section id="ai-chat" className="py-20">
+        <div className="container mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="space-y-8"
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <h2 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-indigo-700 dark:from-indigo-400 dark:to-indigo-300 mb-4">
+                AI Assistant
+              </h2>
+              <div className="h-1 w-24 bg-gradient-to-r from-indigo-500 to-indigo-700 dark:from-indigo-400 dark:to-indigo-300 rounded-full mb-8"></div>
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+                Chat with my AI assistant about software development, technology, or any questions you might have.
+              </p>
+            </motion.div>
+            <AIChat />
+          </motion.div>
+        </div>
+      </Section>
 
       {/* Contact Section */}
       <Contact />
