@@ -36,10 +36,13 @@ export async function POST(request: Request) {
     try {
       await transporter.verify();
       console.log('SMTP connection verified successfully');
-    } catch (verifyError) {
+    } catch (verifyError: any) {
       console.error('SMTP Verification Error:', verifyError);
       return NextResponse.json(
-        { error: 'Email service configuration error', details: verifyError.message },
+        { 
+          error: 'Email service configuration error', 
+          details: verifyError?.message || 'Unknown error occurred'
+        },
         { status: 500 }
       );
     }
@@ -61,7 +64,7 @@ export async function POST(request: Request) {
       message: 'Email sent successfully',
       messageId: info.messageId 
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Detailed error:', {
       name: error.name,
       message: error.message,
@@ -71,7 +74,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       { 
         error: 'Failed to send email',
-        details: error.message 
+        details: error?.message || 'Unknown error occurred'
       },
       { status: 500 }
     );
