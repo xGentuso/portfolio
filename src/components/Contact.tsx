@@ -273,7 +273,7 @@ export default function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                   className="w-full px-4 py-3 rounded-lg bg-gray-800/50 border border-gray-700/50 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-500 backdrop-blur-sm"
-                  placeholder="Enter your name"
+                  placeholder="Your name"
                   required
                 />
               </div>
@@ -285,7 +285,7 @@ export default function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full px-4 py-3 rounded-lg bg-gray-800/50 border border-gray-700/50 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-500 backdrop-blur-sm"
-                  placeholder="Enter your email"
+                  placeholder="Your email address"
                   required
                 />
               </div>
@@ -298,7 +298,7 @@ export default function Contact() {
                 onChange={handleChange}
                 className="w-full px-4 py-3 rounded-lg bg-gray-800/50 border border-gray-700/50 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-500 backdrop-blur-sm"
                 rows={6}
-                placeholder="Hi, I think we need a design system for our products at Company X. How soon can you hop on to discuss this?"
+                placeholder="Your message"
                 required
               ></textarea>
             </div>

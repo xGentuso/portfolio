@@ -157,7 +157,7 @@ export default function CommandPalette() {
                   <Combobox.Input
                     onChange={(event) => setQuery(event.target.value)}
                     className="w-full h-12 bg-transparent border-0 focus:ring-0 text-sm text-gray-800 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400"
-                    placeholder="Search commands..."
+                    placeholder="Type a command"
                   />
                 </div>
 
