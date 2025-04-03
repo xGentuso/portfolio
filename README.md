@@ -44,7 +44,7 @@ Welcome to my portfolio website repository! This is a modern, responsive portfol
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/portfolio.git
+   git clone https://github.com/xgentuso/portfolio.git
    cd portfolio
    ```
 
