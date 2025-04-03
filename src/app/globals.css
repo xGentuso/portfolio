@@ -65,3 +65,10 @@ pre[class*="language-"] {
   margin: 0 !important;
   overflow: auto !important;
 }
+
+/* Card flip styling */
+.backface-hidden {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}

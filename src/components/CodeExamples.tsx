@@ -3,11 +3,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiCopy, FiPlus, FiTrash2, FiCheck, FiX } from "react-icons/fi";
-import Prism from "prismjs";
-import "prismjs/themes/prism-tomorrow.css";
-import "prismjs/components/prism-typescript";
-import "prismjs/components/prism-swift";
-import "prismjs/components/prism-javascript";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 // Add the Counter component that uses our custom hook
 const useCounter = (initialValue = 0) => {
@@ -167,41 +164,47 @@ function LiveAnimatedCard() {
       <motion.div
         className="w-64 h-96 relative cursor-pointer"
         onClick={() => setIsFlipped(!isFlipped)}
-        animate={{ rotateY: isFlipped ? 180 : 0 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        style={{ transformStyle: "preserve-3d" }}
+        style={{ perspective: "1000px" }}
       >
-        <div
-          className={`absolute inset-0 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 p-6 flex flex-col justify-between backface-hidden ${
-            isFlipped ? 'opacity-0' : 'opacity-100'
-          }`}
+        <motion.div
+          className="w-full h-full relative"
+          animate={{ rotateY: isFlipped ? 180 : 0 }}
+          transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
+          style={{ transformStyle: "preserve-3d" }}
         >
-          <div className="text-white">
-            <h3 className="text-xl font-bold">Ryan Mota</h3>
-            <p className="text-sm opacity-80">iOS Developer</p>
+          {/* Front of card */}
+          <div 
+            className="absolute w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl p-6 text-white flex flex-col items-center justify-center backface-hidden"
+            style={{ 
+              backfaceVisibility: "hidden",
+              WebkitBackfaceVisibility: "hidden"
+            }}
+          >
+            <h3 className="text-2xl font-bold mb-4">Ryan Mota</h3>
+            <p className="text-lg mb-2">iOS Developer</p>
+            <p className="text-sm opacity-80">Click to flip</p>
           </div>
-          <div className="grid grid-cols-4 gap-2 text-white/80 text-xs">
-            <span>Swift</span>
-            <span>UIKit</span>
-            <span>SwiftUI</span>
-            <span>Firebase</span>
+
+          {/* Back of card */}
+          <div 
+            className="absolute w-full h-full bg-gradient-to-br from-purple-600 to-blue-500 rounded-xl p-6 text-white flex flex-col items-center justify-center"
+            style={{ 
+              transform: "rotateY(180deg)",
+              backfaceVisibility: "hidden",
+              WebkitBackfaceVisibility: "hidden"
+            }}
+          >
+            <h4 className="text-xl font-semibold mb-4">Experience</h4>
+            <ul className="text-sm space-y-2 text-center">
+              <li>1 Year iOS Development</li>
+              <li>SwiftUI & UIKit</li>
+              <li>Core Data & CloudKit</li>
+              <li>App Store Publishing</li>
+            </ul>
           </div>
-        </div>
-        <div
-          className={`absolute inset-0 rounded-xl bg-gray-700 p-6 flex flex-col justify-center items-center text-white backface-hidden ${
-            !isFlipped ? 'opacity-0' : 'opacity-100'
-          }`}
-          style={{ transform: "rotateY(180deg)" }}
-        >
-          <p className="text-center mb-4">Click to flip back</p>
-          <div className="space-y-2 text-sm">
-            <p>• 3+ years of iOS development</p>
-            <p>• Published apps on App Store</p>
-            <p>• Expertise in Swift & SwiftUI</p>
-          </div>
-        </div>
+        </motion.div>
       </motion.div>
-      <p className="text-sm text-gray-400 mt-2">Click the card to flip</p>
+      <p className="text-sm text-gray-400">Click the card to flip</p>
     </div>
   );
 }
@@ -281,7 +284,7 @@ const codeExamples = [
     LivePreview: LiveTodoList
   },
   {
-    id: "swift",
+    id: "animated",
     title: "Animated Card",
     description: "Interactive card with 3D flip animation",
     code: `struct FlipCard: View {
@@ -308,46 +311,51 @@ struct Card: View {
     var body: some View {
         ZStack {
             // Front of card
-            VStack(alignment: .leading) {
+            VStack {
                 Text("Ryan Mota")
                     .font(.title)
                     .bold()
                 Text("iOS Developer")
-                    .foregroundColor(.secondary)
-                
-                Spacer()
-                
-                HStack {
-                    ForEach(["Swift", "UIKit", "SwiftUI"], id: \\.self) { skill in
-                        Text(skill)
-                            .font(.caption)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                            .background(Color.blue.opacity(0.2))
-                            .cornerRadius(8)
-                    }
-                }
+                Text("Click to flip")
+                    .font(.caption)
+                    .opacity(0.8)
             }
-            .padding()
+            .frame(width: 250, height: 350)
             .background(
                 LinearGradient(
-                    gradient: Gradient(colors: [.blue, .purple]),
+                    colors: [.blue, .purple],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
             )
-            .cornerRadius(16)
-            
+            .foregroundColor(.white)
+            .cornerRadius(20)
+            .opacity(isFlipped ? 0 : 1)
+
             // Back of card
-            VStack(spacing: 12) {
-                Text("• 3+ years of iOS development")
-                Text("• Published apps on App Store")
-                Text("• Expertise in Swift & SwiftUI")
+            VStack(spacing: 10) {
+                Text("Experience")
+                    .font(.title2)
+                    .bold()
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("• 1 Year iOS Development")
+                    Text("• SwiftUI & UIKit")
+                    Text("• Core Data & CloudKit")
+                    Text("• App Store Publishing")
+                }
             }
-            .padding()
-            .background(Color(.systemGray5))
-            .cornerRadius(16)
+            .frame(width: 250, height: 350)
+            .background(
+                LinearGradient(
+                    colors: [.purple, .blue],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+            .foregroundColor(.white)
+            .cornerRadius(20)
             .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
+            .opacity(isFlipped ? 1 : 0)
         }
     }
 }`,
@@ -390,11 +398,12 @@ router.get('/api/users/:id', async (req, res) => {
 
 export default function CodeExamples() {
   const [activeTab, setActiveTab] = useState("react");
+  const [mounted, setMounted] = useState(false);
   const activeExample = codeExamples.find(example => example.id === activeTab);
 
   useEffect(() => {
-    Prism.highlightAll();
-  }, [activeTab]);
+    setMounted(true);
+  }, []);
 
   return (
     <div className="w-full bg-[#0B1120] bg-[radial-gradient(#1D2B44_1px,transparent_1px)] [background-size:24px_24px]">
@@ -431,14 +440,22 @@ export default function CodeExamples() {
             </div>
             
             <div className="mt-4 bg-black rounded-lg overflow-hidden">
-              <pre className="p-6 overflow-x-auto">
-                <code className={`language-${activeExample?.language}`}>
-                  {activeExample?.code}
-                </code>
-              </pre>
+              {mounted && (
+                <SyntaxHighlighter
+                  language={activeExample?.language || 'typescript'}
+                  style={oneDark}
+                  customStyle={{
+                    margin: 0,
+                    padding: '1.5rem',
+                    background: 'black'
+                  }}
+                >
+                  {activeExample?.code || ''}
+                </SyntaxHighlighter>
+              )}
             </div>
 
-            {activeExample?.LivePreview && (
+            {activeExample?.LivePreview && mounted && (
               <div className="mt-6">
                 <p className="text-[#6B8AFF] text-sm mb-4">Live Preview</p>
                 <div className="flex justify-center">
