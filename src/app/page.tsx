@@ -106,7 +106,7 @@ export default function Home() {
   }, [codeSnippets.length]);
 
   return (
-    <div className="bg-[#0B1120] transition-colors duration-300">
+    <div className="transition-colors duration-300">
       <Hero />
       
       {/* About Section */}

@@ -439,9 +439,9 @@ export default function CodeExamples() {
   }, []);
 
   return (
-    <div className="w-full bg-[#0B1120] bg-[radial-gradient(#1D2B44_1px,transparent_1px)] [background-size:24px_24px]">
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-[#151B28] rounded-xl p-6">
+    <div className="w-full py-20">
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="bg-[#151B28]/80 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50">
           <div className="flex space-x-8">
             {codeExamples.map((example) => (
               <button

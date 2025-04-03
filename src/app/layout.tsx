@@ -6,6 +6,7 @@ import CommandPalette from "@/components/ui/CommandPalette";
 import Footer from "@/components/layout/Footer";
 import { Analytics } from '@vercel/analytics/react';
 import { metadata } from "./metadata";
+import ParticleBackground from "@/components/ParticleBackground";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,22 +22,25 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
-      <body className="bg-white dark:bg-gray-900 transition-colors duration-300">
-        <ThemeProvider>
-          <div className="min-h-screen relative">
-            <div className="fixed top-6 right-6 z-50">
-              <ThemeSwitcher />
-            </div>
-            <div className="fixed bottom-8 left-8 z-50">
-              <CommandPalette />
-            </div>
-            <main className="relative">
-              {children}
-            </main>
-            <Footer />
+      <body className="min-h-screen">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
+          <ParticleBackground />
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            {children}
           </div>
+          <div className="fixed top-6 right-6" style={{ zIndex: 50 }}>
+            <ThemeSwitcher />
+          </div>
+          <div className="fixed bottom-8 left-8" style={{ zIndex: 50 }}>
+            <CommandPalette />
+          </div>
+          <Analytics />
         </ThemeProvider>
-        <Analytics />
       </body>
     </html>
   );
