@@ -60,6 +60,8 @@ export default function Contact() {
     email: "",
     message: ""
   });
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<boolean>(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -173,6 +175,8 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError(null);
+    setSuccess(false);
     
     try {
       const response = await fetch('/api/contact', {
@@ -186,7 +190,7 @@ export default function Contact() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to send message');
+        throw new Error(data.error || data.details || 'Failed to send message');
       }
 
       // Reset form on success
@@ -196,11 +200,14 @@ export default function Contact() {
         message: ""
       });
 
-      // Show success message (you can add a toast notification here)
-      alert('Message sent successfully!');
-    } catch (error) {
-      console.error('Error sending message:', error);
-      alert('Failed to send message. Please try again.');
+      setSuccess(true);
+      // Show success message
+      alert('Message sent successfully! We will get back to you soon.');
+    } catch (err) {
+      console.error('Error sending message:', err);
+      const error = err as Error;
+      setError(error.message || 'Failed to send message. Please try again.');
+      alert(error.message || 'Failed to send message. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -247,6 +254,16 @@ export default function Contact() {
             className="space-y-6"
             onSubmit={handleSubmit}
           >
+            {error && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <span className="block sm:inline">{error}</span>
+              </div>
+            )}
+            {success && (
+              <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                <span className="block sm:inline">Message sent successfully!</span>
+              </div>
+            )}
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-gray-300 mb-2 text-sm">Your Name</label>
@@ -292,7 +309,7 @@ export default function Contact() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <span>SHOOT</span>
+              <span>{isSubmitting ? 'SENDING...' : 'SHOOT'}</span>
               <FiSend className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </motion.form>
