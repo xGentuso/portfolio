@@ -17,7 +17,7 @@ const navigation = {
     },
     {
       name: "Email",
-      href: "mailto:ryan.mota@triosstudent.com",
+      href: "mailto:ryancodes00@gmail.com",
       icon: FiMail,
     },
   ],
