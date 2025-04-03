@@ -52,7 +52,7 @@ export default function ContactPage() {
                   Email
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400">
-                  hello@example.com
+                  ryan.mota@triosstudent.com
                 </p>
               </div>
             </div>
