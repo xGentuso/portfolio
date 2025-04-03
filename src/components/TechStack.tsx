@@ -248,8 +248,8 @@ function TechStackCard({ tech }: TechStackCardProps) {
 
 export default function TechStack() {
   return (
-    <section className="py-20 bg-[#0B1120] bg-[radial-gradient(#1D2B44_1px,transparent_1px)] [background-size:24px_24px]">
-      <div className="container mx-auto px-4">
+    <section className="relative py-20">
+      <div className="relative z-10 container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -257,7 +257,7 @@ export default function TechStack() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 mb-4">
+          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
             Technologies I Work With
           </h2>
           <p className="text-lg text-gray-400">
