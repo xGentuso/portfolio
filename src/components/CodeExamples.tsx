@@ -77,80 +77,118 @@ function LiveSwiftButton() {
 }
 
 // React Todo List with Animations
-function LiveTodoList() {
-  const [todos, setTodos] = useState([
-    { id: 1, text: "Learn React", completed: true },
-    { id: 2, text: "Build Portfolio", completed: false },
-  ]);
-  const [newTodo, setNewTodo] = useState("");
-  const [nextId, setNextId] = useState(3);
+const LiveTodoList = () => {
+  const [todos, setTodos] = useState<{ id: string; text: string; completed: boolean }[]>([]);
+  const [input, setInput] = useState('');
 
   const addTodo = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newTodo.trim()) return;
-    setTodos([...todos, { id: nextId, text: newTodo, completed: false }]);
-    setNextId(nextId + 1);
-    setNewTodo("");
+    if (!input.trim()) return;
+    setTodos([...todos, { id: crypto.randomUUID(), text: input.trim(), completed: false }]);
+    setInput('');
   };
 
-  const toggleTodo = (id: number) => {
-    setTodos(todos.map(todo =>
+  const toggleTodo = (id: string) => {
+    setTodos(todos.map(todo => 
       todo.id === id ? { ...todo, completed: !todo.completed } : todo
     ));
   };
 
-  const deleteTodo = (id: number) => {
+  const deleteTodo = (id: string) => {
     setTodos(todos.filter(todo => todo.id !== id));
   };
 
   return (
-    <div className="w-full max-w-md mx-auto bg-gray-800 rounded-lg p-6">
-      <form onSubmit={addTodo} className="flex gap-2 mb-4">
-        <input
-          type="text"
-          value={newTodo}
-          onChange={(e) => setNewTodo(e.target.value)}
-          placeholder="Add new todo..."
-          className="flex-1 px-4 py-2 rounded-lg bg-gray-700 text-white"
-        />
-        <button
-          type="submit"
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-        >
-          Add
-        </button>
-      </form>
-      
-      <motion.ul className="space-y-2">
-        {todos.map(todo => (
-          <motion.li
-            key={todo.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            className="flex items-center gap-2 p-2 bg-gray-700 rounded-lg"
+    <div className="w-full max-w-md mx-auto bg-[#1E2330] rounded-xl shadow-xl overflow-hidden">
+      <div className="p-6">
+        <h3 className="text-gray-400 text-sm font-medium mb-4">Live Preview</h3>
+        
+        <form onSubmit={addTodo} className="flex gap-2 mb-6">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Add new task..."
+            className="flex-1 bg-[#141824] text-gray-100 placeholder-gray-500 px-4 py-2 rounded-lg border border-gray-700/50 focus:outline-none focus:border-blue-500/50 transition-colors"
+          />
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center"
           >
-            <input
-              type="checkbox"
-              checked={todo.completed}
-              onChange={() => toggleTodo(todo.id)}
-              className="w-5 h-5"
-            />
-            <span className={`flex-1 ${todo.completed ? 'line-through text-gray-400' : 'text-white'}`}>
-              {todo.text}
-            </span>
-            <button
-              onClick={() => deleteTodo(todo.id)}
-              className="p-1 text-red-400 hover:text-red-300"
+            Add
+          </button>
+        </form>
+
+        <div className="space-y-2">
+          {todos.map(todo => (
+            <motion.div
+              key={todo.id}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="group flex items-center gap-3 p-3 bg-[#141824] rounded-lg border border-gray-700/50"
             >
-              Delete
-            </button>
-          </motion.li>
-        ))}
-      </motion.ul>
+              <button
+                onClick={() => toggleTodo(todo.id)}
+                className={`flex-shrink-0 w-5 h-5 rounded border-2 ${
+                  todo.completed 
+                    ? 'bg-blue-500 border-blue-500' 
+                    : 'border-gray-600 hover:border-blue-500'
+                } transition-colors`}
+              >
+                {todo.completed && (
+                  <motion.svg
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="w-full h-full text-white p-0.5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </motion.svg>
+                )}
+              </button>
+              
+              <span className={`flex-1 text-sm ${
+                todo.completed 
+                  ? 'text-gray-500 line-through' 
+                  : 'text-gray-200'
+              } transition-colors`}>
+                {todo.text}
+              </span>
+
+              <button
+                onClick={() => deleteTodo(todo.id)}
+                className="opacity-0 group-hover:opacity-100 text-gray-500 hover:text-red-400 transition-all"
+              >
+                <motion.svg
+                  whileHover={{ scale: 1.1 }}
+                  className="w-4 h-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </motion.svg>
+              </button>
+            </motion.div>
+          ))}
+          
+          {todos.length === 0 && (
+            <div className="text-center py-8 text-gray-500 text-sm">
+              No tasks yet. Add one to get started!
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 // Animated Card Component
 function LiveAnimatedCard() {
