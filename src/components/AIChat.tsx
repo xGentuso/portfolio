@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FiSend, FiUser, FiCpu, FiCode, FiTerminal, FiBox, FiImage, FiTrash2 } from 'react-icons/fi';
 import ReactMarkdown from 'react-markdown';
@@ -14,6 +14,18 @@ export default function AIChat() {
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState<AIMode>('chat');
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      const { scrollHeight, clientHeight } = chatContainerRef.current;
+      chatContainerRef.current.scrollTop = scrollHeight - clientHeight;
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isLoading]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,7 +87,7 @@ export default function AIChat() {
     <div className="max-w-4xl mx-auto">
       {/* AI Services Info Cards */}
       <div className="grid md:grid-cols-2 gap-6 mb-6">
-        {/* Deep Infra Card */}
+        {/* Chat AI Card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -87,8 +99,8 @@ export default function AIChat() {
               <FiCpu className="w-6 h-6 text-blue-400" />
             </div>
             <div>
-              <h4 className="text-xl font-semibold text-white">Deep Infra AI</h4>
-              <p className="text-gray-400">Llama-2-70b LLM</p>
+              <h4 className="text-xl font-semibold text-white">AI Assistant</h4>
+              <p className="text-gray-400">Mistral-7B LLM</p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-2">
@@ -116,7 +128,7 @@ export default function AIChat() {
               <FiImage className="w-6 h-6 text-emerald-400" />
             </div>
             <div>
-              <h4 className="text-xl font-semibold text-white">Hugging Face</h4>
+              <h4 className="text-xl font-semibold text-white">Image Creator</h4>
               <p className="text-gray-400">Stable Diffusion XL</p>
             </div>
           </div>
@@ -167,12 +179,16 @@ export default function AIChat() {
                 ? 'bg-blue-500/20 text-blue-400'
                 : 'bg-emerald-500/20 text-emerald-400'
             }`}>
-              {mode === 'chat' ? 'Llama-2-70b' : 'SDXL'}
+              {mode === 'chat' ? 'Mistral-7B' : 'SDXL'}
             </span>
           </div>
         </div>
 
-        <div className="h-[400px] overflow-y-auto p-4 space-y-4" id="chat-messages">
+        <div 
+          className="h-[400px] overflow-y-auto p-4 space-y-4" 
+          id="chat-messages"
+          ref={chatContainerRef}
+        >
           {messages.length === 0 && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -182,25 +198,25 @@ export default function AIChat() {
               {mode === 'chat' ? (
                 <>
                   <FiCpu className="w-8 h-8 mx-auto mb-4 text-blue-400" />
-                  <p>Ask me anything about programming, technology, or software development!</p>
+                  <p>Ask me anything! I can help with coding, writing, analysis, and more!</p>
                   <div className="flex flex-wrap justify-center gap-2 mt-4">
                     <button
-                      onClick={() => setInput("How can I optimize React performance?")}
+                      onClick={() => setInput("How does machine learning work?")}
                       className="text-xs bg-gray-800/50 px-3 py-1 rounded-full text-gray-300 hover:bg-gray-700/50 transition-colors"
                     >
-                      "How can I optimize React performance?"
+                      "How does machine learning work?"
                     </button>
                     <button
-                      onClick={() => setInput("Explain async/await in JavaScript")}
+                      onClick={() => setInput("Write a creative story about a programmer")}
                       className="text-xs bg-gray-800/50 px-3 py-1 rounded-full text-gray-300 hover:bg-gray-700/50 transition-colors"
                     >
-                      "Explain async/await in JavaScript"
+                      "Write a creative story about a programmer"
                     </button>
                     <button
-                      onClick={() => setInput("Best practices for API design")}
+                      onClick={() => setInput("Explain quantum computing")}
                       className="text-xs bg-gray-800/50 px-3 py-1 rounded-full text-gray-300 hover:bg-gray-700/50 transition-colors"
                     >
-                      "Best practices for API design"
+                      "Explain quantum computing"
                     </button>
                   </div>
                 </>
@@ -311,7 +327,7 @@ export default function AIChat() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder={mode === 'chat' 
-                ? "Ask about programming, technology, or software development..."
+                ? "Ask me anything - from coding to general knowledge..."
                 : "Describe the image you want to generate..."
               }
               className="flex-1 bg-gray-800/50 text-white placeholder-gray-400 px-4 py-2 rounded-lg border border-gray-700/50 focus:outline-none focus:border-blue-500/50"

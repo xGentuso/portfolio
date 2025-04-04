@@ -57,36 +57,42 @@ jest.mock('next/server', () => ({
 
 // Mock fetch with proper response format
 global.fetch = jest.fn((url) => {
-  // If the URL contains 'huggingface', return a blob response
+  // If the URL contains 'huggingface', return appropriate response
   if (url.includes('huggingface')) {
-    // Create a base64 image data
-    const imageData = Buffer.from('test-image-data').toString('base64')
-    return Promise.resolve(new MockResponse(imageData, {
-      status: 200,
-      headers: { 'Content-Type': 'image/png' }
-    }))
+    if (url.includes('Mistral-7B-Instruct')) {
+      // For chat endpoint
+      return Promise.resolve(new MockResponse(JSON.stringify([{
+        generated_text: 'Test response'
+      }]), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      }));
+    } else {
+      // For image endpoint
+      const imageData = Buffer.from('test-image-data').toString('base64');
+      return Promise.resolve(new MockResponse(imageData, {
+        status: 200,
+        headers: { 'Content-Type': 'image/png' }
+      }));
+    }
   }
   
   // If testing error case
-  if (url.includes('deepinfra') && global.mockDeepInfraError) {
-    return Promise.reject(new Error('Failed to process request'))
+  if (global.mockApiError) {
+    return Promise.reject(new Error('Failed to process request'));
   }
   
-  // Otherwise return JSON response
+  // Default JSON response
   return Promise.resolve(new MockResponse(JSON.stringify({
-    choices: [{
-      message: {
-        content: 'Test response'
-      }
-    }]
+    error: 'Unexpected URL'
   }), {
-    status: 200,
+    status: 400,
     headers: { 'Content-Type': 'application/json' }
-  }))
-})
+  }));
+});
 
 // Set up environment variables
-process.env.DEEP_INFRA_API_KEY = 'test-deep-infra-key'
+process.env.HUGGING_FACE_API_KEY = 'test-huggingface-key';
 
 // Export test utilities
-export const mockFetch = global.fetch 
+export const mockFetch = global.fetch; 

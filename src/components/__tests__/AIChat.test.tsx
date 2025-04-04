@@ -8,8 +8,8 @@ describe('AIChat Component', () => {
     render(<AIChat />)
     
     // Check for main elements
-    expect(screen.getByText('Deep Infra AI')).toBeInTheDocument()
-    expect(screen.getByText('Llama-2-70b LLM')).toBeInTheDocument()
+    expect(screen.getByText('Hugging Face AI')).toBeInTheDocument()
+    expect(screen.getByText('Mistral-7B LLM')).toBeInTheDocument()
     expect(screen.getByText('Code')).toBeInTheDocument()
   })
 

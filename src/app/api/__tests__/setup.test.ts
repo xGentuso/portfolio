@@ -14,20 +14,16 @@ describe('Test Setup', () => {
     expect(global.Blob).toBeDefined()
 
     // Test environment variables
-    expect(process.env.DEEP_INFRA_API_KEY).toBe('test-deep-infra-key')
+    expect(process.env.HUGGING_FACE_API_KEY).toBe('test-huggingface-key')
   })
 
   it('mocks fetch with correct response format', async () => {
-    const response = await global.fetch('test-url')
+    const response = await global.fetch('https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2')
     const data = await response.json()
     
-    expect(data).toEqual({
-      choices: [{
-        message: {
-          content: 'Test response'
-        }
-      }]
-    })
+    expect(data).toEqual([{
+      generated_text: 'Test response'
+    }])
   })
 
   it('mocks fetch blob response correctly', async () => {

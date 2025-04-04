@@ -10,8 +10,8 @@ describe('Chat API Route', () => {
   })
 
   it('returns 500 if API key is missing', async () => {
-    const savedKey = process.env.DEEP_INFRA_API_KEY
-    delete process.env.DEEP_INFRA_API_KEY
+    const savedKey = process.env.HUGGING_FACE_API_KEY
+    delete process.env.HUGGING_FACE_API_KEY
     
     const request = new Request('http://localhost:3000/api/chat', {
       method: 'POST',
@@ -21,10 +21,10 @@ describe('Chat API Route', () => {
     const response = await POST(request)
     expect(response.status).toBe(500)
     const data = await response.json()
-    expect(data.error).toBe('Deep Infra API key not found')
+    expect(data.error).toBe('Hugging Face API key not found')
 
     // Restore the key
-    process.env.DEEP_INFRA_API_KEY = savedKey
+    process.env.HUGGING_FACE_API_KEY = savedKey
   })
 
   it('returns 400 if message is missing', async () => {
@@ -40,7 +40,7 @@ describe('Chat API Route', () => {
   })
 
   it('handles API errors gracefully', async () => {
-    global.mockDeepInfraError = true
+    global.mockApiError = true
     
     const request = new Request('http://localhost:3000/api/chat', {
       method: 'POST',
@@ -52,6 +52,6 @@ describe('Chat API Route', () => {
     const data = await response.json()
     expect(data.error).toBe('Failed to process request')
     
-    global.mockDeepInfraError = false
+    global.mockApiError = false
   })
 }) 
