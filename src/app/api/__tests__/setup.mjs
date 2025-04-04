@@ -86,7 +86,7 @@ global.fetch = jest.fn((url) => {
 })
 
 // Set up environment variables
-process.env.NEXT_PUBLIC_DEEP_INFRA_API_KEY = 'test-deep-infra-key'
+process.env.DEEP_INFRA_API_KEY = 'test-deep-infra-key'
 
 // Export test utilities
 export const mockFetch = global.fetch 

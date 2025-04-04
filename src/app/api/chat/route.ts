@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export async function POST(req: Request) {
   try {
     // Check for API key first
-    const apiKey = process.env.NEXT_PUBLIC_DEEP_INFRA_API_KEY;
+    const apiKey = process.env.DEEP_INFRA_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
         { error: 'Deep Infra API key not found' },

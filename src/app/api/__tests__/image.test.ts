@@ -9,8 +9,8 @@ describe('Image Generation API Route', () => {
   })
 
   it('returns 500 if API key is missing', async () => {
-    const savedKey = process.env.NEXT_PUBLIC_HUGGING_FACE_API_KEY
-    delete process.env.NEXT_PUBLIC_HUGGING_FACE_API_KEY
+    const savedKey = process.env.HUGGING_FACE_API_KEY
+    delete process.env.HUGGING_FACE_API_KEY
     
     const request = new Request('http://localhost:3000/api/image', {
       method: 'POST',
@@ -26,7 +26,7 @@ describe('Image Generation API Route', () => {
     expect(data.error).toBe('Hugging Face API key not found')
 
     // Restore the key
-    process.env.NEXT_PUBLIC_HUGGING_FACE_API_KEY = savedKey
+    process.env.HUGGING_FACE_API_KEY = savedKey
   })
 
   it('returns 400 if prompt is missing', async () => {

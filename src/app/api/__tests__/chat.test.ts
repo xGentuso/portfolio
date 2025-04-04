@@ -10,8 +10,8 @@ describe('Chat API Route', () => {
   })
 
   it('returns 500 if API key is missing', async () => {
-    const savedKey = process.env.NEXT_PUBLIC_DEEP_INFRA_API_KEY
-    delete process.env.NEXT_PUBLIC_DEEP_INFRA_API_KEY
+    const savedKey = process.env.DEEP_INFRA_API_KEY
+    delete process.env.DEEP_INFRA_API_KEY
     
     const request = new Request('http://localhost:3000/api/chat', {
       method: 'POST',
@@ -24,7 +24,7 @@ describe('Chat API Route', () => {
     expect(data.error).toBe('Deep Infra API key not found')
 
     // Restore the key
-    process.env.NEXT_PUBLIC_DEEP_INFRA_API_KEY = savedKey
+    process.env.DEEP_INFRA_API_KEY = savedKey
   })
 
   it('returns 400 if message is missing', async () => {

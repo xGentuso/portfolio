@@ -14,7 +14,7 @@ describe('Test Setup', () => {
     expect(global.Blob).toBeDefined()
 
     // Test environment variables
-    expect(process.env.NEXT_PUBLIC_DEEP_INFRA_API_KEY).toBe('test-deep-infra-key')
+    expect(process.env.DEEP_INFRA_API_KEY).toBe('test-deep-infra-key')
   })
 
   it('mocks fetch with correct response format', async () => {
