@@ -2,13 +2,23 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   try {
-    const { prompt } = await req.json();
-    const HUGGING_FACE_API_KEY = process.env.HUGGING_FACE_API_KEY;
-
-    if (!HUGGING_FACE_API_KEY) {
+    // Check for API key first
+    const apiKey = process.env.NEXT_PUBLIC_HUGGING_FACE_API_KEY;
+    if (!apiKey) {
       return NextResponse.json(
-        { error: 'Hugging Face API key not configured' },
+        { error: 'Hugging Face API key not found' },
         { status: 500 }
+      );
+    }
+
+    // Parse request body
+    const body = await req.json();
+    
+    // Check for required prompt
+    if (!body.prompt) {
+      return NextResponse.json(
+        { error: 'Prompt is required' },
+        { status: 400 }
       );
     }
 
@@ -17,18 +27,10 @@ export async function POST(req: Request) {
       {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${HUGGING_FACE_API_KEY}`,
-          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          inputs: prompt,
-          parameters: {
-            negative_prompt: "blurry, bad quality, distorted, ugly, deformed",
-            num_inference_steps: 50,
-            guidance_scale: 7.5,
-            width: 1024,
-            height: 1024
-          }
+          inputs: body.prompt,
         }),
       }
     );
@@ -43,15 +45,15 @@ export async function POST(req: Request) {
       
       if (response.status === 401) {
         return NextResponse.json(
-          { error: 'Invalid API key. Please check your Hugging Face API key configuration.' },
-          { status: 401 }
+          { error: 'Invalid API key' },
+          { status: 500 }
         );
       }
       
       if (response.status === 429) {
         return NextResponse.json(
-          { error: 'Rate limit exceeded. Please try again later.' },
-          { status: 429 }
+          { error: 'Rate limit exceeded' },
+          { status: 500 }
         );
       }
 
@@ -60,8 +62,9 @@ export async function POST(req: Request) {
 
     // The response is a blob containing the image
     const blob = await response.blob();
-    const base64 = Buffer.from(await blob.arrayBuffer()).toString('base64');
-    const imageUrl = `data:image/jpeg;base64,${base64}`;
+    const arrayBuffer = await blob.arrayBuffer();
+    const base64 = Buffer.from(arrayBuffer).toString('base64');
+    const imageUrl = `data:${blob.type};base64,${base64}`;
 
     return NextResponse.json({ imageUrl });
   } catch (error) {

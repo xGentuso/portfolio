@@ -2,63 +2,42 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   try {
-    const { message } = await req.json();
-    const DEEP_INFRA_API_KEY = process.env.DEEP_INFRA_API_KEY;
-
-    if (!DEEP_INFRA_API_KEY) {
+    // Check for API key first
+    const apiKey = process.env.NEXT_PUBLIC_DEEP_INFRA_API_KEY;
+    if (!apiKey) {
       return NextResponse.json(
-        { error: 'Deep Infra API key not configured' },
+        { error: 'Deep Infra API key not found' },
         { status: 500 }
+      );
+    }
+
+    // Parse request body
+    const body = await req.json();
+    
+    // Check for required message
+    if (!body.message) {
+      return NextResponse.json(
+        { error: 'Message is required' },
+        { status: 400 }
       );
     }
 
     const response = await fetch('https://api.deepinfra.com/v1/openai/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${DEEP_INFRA_API_KEY}`,
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
         model: 'meta-llama/Llama-2-70b-chat-hf',
         messages: [
           {
-            role: 'system',
-            content: 'You are a helpful AI assistant specializing in software development, technology, and programming. You provide clear, concise, and accurate responses with code examples when relevant. You are part of a portfolio website showcasing development skills.'
-          },
-          {
             role: 'user',
-            content: message
-          }
+            content: body.message,
+          },
         ],
-        temperature: 0.7,
-        max_tokens: 2048,
       }),
     });
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => null);
-      console.error('Deep Infra API Error:', {
-        status: response.status,
-        statusText: response.statusText,
-        error: errorData
-      });
-      
-      if (response.status === 401) {
-        return NextResponse.json(
-          { error: 'Invalid API key. Please check your Deep Infra API key configuration.' },
-          { status: 401 }
-        );
-      }
-      
-      if (response.status === 429) {
-        return NextResponse.json(
-          { error: 'Rate limit exceeded. Please try again later.' },
-          { status: 429 }
-        );
-      }
-
-      throw new Error(`Deep Infra API error: ${response.status} ${response.statusText}`);
-    }
 
     const data = await response.json();
     
