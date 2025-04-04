@@ -217,7 +217,7 @@ export default function Home() {
               <div className="text-center mb-8">
                 <h2 className="text-4xl font-bold text-[#8B9EFF] mb-4">AI Assistant</h2>
                 <p className="text-gray-400 max-w-2xl mx-auto">
-                  Chat with my AI assistant about software development, technology, or any questions you might have.
+                  Chat about development, get code assistance, or generate custom artwork using advanced AI models.
                 </p>
               </div>
             </motion.div>
