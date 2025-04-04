@@ -29,9 +29,40 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-inter)"],
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            color: 'inherit',
+            a: {
+              color: '#3b82f6',
+              '&:hover': {
+                color: '#60a5fa',
+              },
+            },
+            'h1,h2,h3,h4': {
+              color: 'inherit',
+            },
+            code: {
+              color: 'inherit',
+              backgroundColor: '#1f2937',
+              padding: '0.2em 0.4em',
+              borderRadius: '0.25rem',
+              fontSize: '0.875em',
+            },
+            'code::before': {
+              content: '""',
+            },
+            'code::after': {
+              content: '""',
+            },
+          },
+        },
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 };
 
 export default config; 

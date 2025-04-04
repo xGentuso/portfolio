@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiSend, FiUser, FiCpu, FiCode, FiTerminal, FiBox, FiImage, FiTrash2 } from 'react-icons/fi';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 type AIMode = 'chat' | 'image';
 
@@ -247,12 +249,18 @@ export default function AIChat() {
                   : <FiUser />
                 }
               </div>
-              <div className={`flex-1 p-4 rounded-xl ${
+              <div className={`flex-1 p-4 rounded-xl prose prose-invert max-w-none ${
                 message.role === 'assistant'
                   ? 'bg-gray-800/50 text-gray-200'
                   : mode === 'chat' ? 'bg-blue-500/10 text-gray-200' : 'bg-emerald-500/10 text-gray-200'
               }`}>
-                {message.content}
+                {message.role === 'assistant' ? (
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {message.content}
+                  </ReactMarkdown>
+                ) : (
+                  message.content
+                )}
                 {mode === 'image' && message.role === 'assistant' && generatedImage && (
                   <img 
                     src={generatedImage} 
