@@ -61,8 +61,8 @@ export async function POST(req: Request) {
       if (!response.ok) {
         const errorData = await response.json().catch(async () => {
           // If JSON parsing fails, try to get the raw text
-          const textError = await response.text().catch(() => 'Unknown error');
-          return { error: textError };
+          const textError = await response.text();
+          return { error: textError || 'Unknown error' };
         });
         
         console.error('Deep Infra API Error:', {
@@ -86,20 +86,19 @@ export async function POST(req: Request) {
         }
 
         return NextResponse.json(
-          { error: errorData?.error || `API error: ${response.status} ${response.statusText}` },
-          { status: response.status || 500 }
+          { error: errorData.error || `API error: ${response.status} ${response.statusText}` },
+          { status: 500 }
         );
       }
 
-      const data = await response.json().catch(async () => {
-        const textResponse = await response.text().catch(() => null);
-        console.error('Failed to parse API response:', textResponse);
-        throw new Error('Invalid response format from Deep Infra API');
-      });
+      const data = await response.json();
       
       if (!data.choices?.[0]?.message?.content) {
         console.error('Unexpected API response format:', data);
-        throw new Error('Invalid response format from Deep Infra API');
+        return NextResponse.json(
+          { error: 'Invalid response format from Deep Infra API' },
+          { status: 500 }
+        );
       }
 
       return NextResponse.json({ response: data.choices[0].message.content });
@@ -113,14 +112,14 @@ export async function POST(req: Request) {
       });
 
       return NextResponse.json(
-        { error: 'Failed to process request' },
+        { error: apiError.message || 'Failed to process request' },
         { status: 500 }
       );
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error('Request Error:', error);
     return NextResponse.json(
-      { error: 'Failed to process request' },
+      { error: error.message || 'Failed to process request' },
       { status: 500 }
     );
   }

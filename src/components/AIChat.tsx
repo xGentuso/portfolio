@@ -35,6 +35,7 @@ export default function AIChat() {
         });
 
         const data = await response.json();
+        
         if (!response.ok) {
           throw new Error(data.error || 'Failed to get response');
         }
@@ -51,6 +52,7 @@ export default function AIChat() {
         });
 
         const data = await response.json();
+        
         if (!response.ok) {
           throw new Error(data.error || 'Failed to generate image');
         }
