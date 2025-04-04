@@ -2,6 +2,13 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   try {
+    // Debug logging
+    console.log('Environment check:', {
+      hasDeepInfraKey: !!process.env.DEEP_INFRA_API_KEY,
+      keyLength: process.env.DEEP_INFRA_API_KEY?.length || 0,
+      nodeEnv: process.env.NODE_ENV
+    });
+
     // Check for API key first
     const apiKey = process.env.DEEP_INFRA_API_KEY;
     if (!apiKey) {

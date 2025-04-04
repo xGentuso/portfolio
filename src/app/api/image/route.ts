@@ -2,6 +2,13 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   try {
+    // Debug logging
+    console.log('Environment check:', {
+      hasHuggingFaceKey: !!process.env.HUGGING_FACE_API_KEY,
+      keyLength: process.env.HUGGING_FACE_API_KEY?.length || 0,
+      nodeEnv: process.env.NODE_ENV
+    });
+
     // Check for API key first
     const apiKey = process.env.HUGGING_FACE_API_KEY;
     if (!apiKey) {
