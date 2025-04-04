@@ -48,12 +48,11 @@ export default function AIChat() {
           body: JSON.stringify({ prompt: userMessage }),
         });
 
+        const data = await response.json();
         if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || 'Failed to generate image');
+          throw new Error(data.error || 'Failed to generate image');
         }
 
-        const data = await response.json();
         setGeneratedImage(data.imageUrl);
         setMessages(prev => [...prev, { role: 'assistant', content: 'Image generated successfully!' }]);
       }
