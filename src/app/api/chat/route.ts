@@ -59,7 +59,12 @@ export async function POST(req: Request) {
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => null);
+        const errorData = await response.json().catch(async () => {
+          // If JSON parsing fails, try to get the raw text
+          const textError = await response.text().catch(() => 'Unknown error');
+          return { error: textError };
+        });
+        
         console.error('Deep Infra API Error:', {
           status: response.status,
           statusText: response.statusText,
@@ -80,10 +85,17 @@ export async function POST(req: Request) {
           );
         }
 
-        throw new Error(`Deep Infra API error: ${response.status} ${response.statusText}`);
+        return NextResponse.json(
+          { error: errorData?.error || `API error: ${response.status} ${response.statusText}` },
+          { status: response.status || 500 }
+        );
       }
 
-      const data = await response.json();
+      const data = await response.json().catch(async () => {
+        const textResponse = await response.text().catch(() => null);
+        console.error('Failed to parse API response:', textResponse);
+        throw new Error('Invalid response format from Deep Infra API');
+      });
       
       if (!data.choices?.[0]?.message?.content) {
         console.error('Unexpected API response format:', data);

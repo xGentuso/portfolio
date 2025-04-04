@@ -47,7 +47,12 @@ export async function POST(req: Request) {
     );
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => null);
+      const errorData = await response.json().catch(async () => {
+        // If JSON parsing fails, try to get the raw text
+        const textError = await response.text().catch(() => 'Unknown error');
+        return { error: textError };
+      });
+      
       console.error('Hugging Face API Error:', {
         status: response.status,
         statusText: response.statusText,
@@ -68,7 +73,10 @@ export async function POST(req: Request) {
         );
       }
 
-      throw new Error(`Hugging Face API error: ${response.status} ${response.statusText}`);
+      return NextResponse.json(
+        { error: errorData?.error || `API error: ${response.status} ${response.statusText}` },
+        { status: response.status || 500 }
+      );
     }
 
     // The response is a blob containing the image
