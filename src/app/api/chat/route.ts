@@ -2,11 +2,15 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   try {
-    // Debug logging
-    console.log('Environment check:', {
+    // Enhanced debug logging
+    console.log('Chat API Environment check:', {
       hasDeepInfraKey: !!process.env.DEEP_INFRA_API_KEY,
       keyLength: process.env.DEEP_INFRA_API_KEY?.length || 0,
-      nodeEnv: process.env.NODE_ENV
+      nodeEnv: process.env.NODE_ENV,
+      availableEnvVars: Object.keys(process.env).filter(key => 
+        key.includes('DEEP') || key.includes('HUGGING')
+      ),
+      vercelEnv: process.env.VERCEL_ENV
     });
 
     // Check for API key first
