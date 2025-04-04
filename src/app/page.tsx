@@ -214,13 +214,12 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <h2 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-indigo-700 dark:from-indigo-400 dark:to-indigo-300 mb-4">
-                AI Assistant
-              </h2>
-              <div className="h-1 w-24 bg-gradient-to-r from-indigo-500 to-indigo-700 dark:from-indigo-400 dark:to-indigo-300 rounded-full mb-8"></div>
-              <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
-                Chat with my AI assistant about software development, technology, or any questions you might have.
-              </p>
+              <div className="text-center mb-8">
+                <h2 className="text-4xl font-bold text-[#8B9EFF] mb-4">AI Assistant</h2>
+                <p className="text-gray-400 max-w-2xl mx-auto">
+                  Chat with my AI assistant about software development, technology, or any questions you might have.
+                </p>
+              </div>
             </motion.div>
             <AIChat />
           </motion.div>
