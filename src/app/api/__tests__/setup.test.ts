@@ -15,7 +15,6 @@ describe('Test Setup', () => {
 
     // Test environment variables
     expect(process.env.NEXT_PUBLIC_DEEP_INFRA_API_KEY).toBe('test-deep-infra-key')
-    expect(process.env.NEXT_PUBLIC_HUGGING_FACE_API_KEY).toBe('test-hugging-face-key')
   })
 
   it('mocks fetch with correct response format', async () => {

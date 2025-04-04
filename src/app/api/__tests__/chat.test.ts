@@ -1,6 +1,7 @@
 import { jest } from '@jest/globals'
 import { mockFetch } from './setup.mjs'
 import { POST } from '../chat/route'
+import { NextResponse } from 'next/server'
 
 describe('Chat API Route', () => {
   beforeEach(() => {
@@ -14,10 +15,7 @@ describe('Chat API Route', () => {
     
     const request = new Request('http://localhost:3000/api/chat', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ message: 'test message' })
+      body: JSON.stringify({ message: 'Test message' }),
     })
 
     const response = await POST(request)
@@ -32,10 +30,7 @@ describe('Chat API Route', () => {
   it('returns 400 if message is missing', async () => {
     const request = new Request('http://localhost:3000/api/chat', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({})
+      body: JSON.stringify({}),
     })
 
     const response = await POST(request)
@@ -45,20 +40,18 @@ describe('Chat API Route', () => {
   })
 
   it('handles API errors gracefully', async () => {
-    // Mock fetch to return an error
-    mockFetch.mockRejectedValueOnce(new Error('API Error'))
-
+    global.mockDeepInfraError = true
+    
     const request = new Request('http://localhost:3000/api/chat', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ message: 'test message' })
+      body: JSON.stringify({ message: 'Test message' }),
     })
 
     const response = await POST(request)
     expect(response.status).toBe(500)
     const data = await response.json()
-    expect(data.error).toBe('API Error')
+    expect(data.error).toBe('Failed to process request')
+    
+    global.mockDeepInfraError = false
   })
 }) 

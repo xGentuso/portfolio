@@ -32,15 +32,14 @@ export default function AIChat() {
           body: JSON.stringify({ message: userMessage }),
         });
 
+        const data = await response.json();
         if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || 'Failed to get response');
+          throw new Error(data.error || 'Failed to get response');
         }
 
-        const data = await response.json();
         setMessages(prev => [...prev, { role: 'assistant', content: data.response }]);
       } else {
-        // Image generation will be implemented here
+        // Image generation
         const response = await fetch('/api/image', {
           method: 'POST',
           headers: {
@@ -59,10 +58,10 @@ export default function AIChat() {
         setMessages(prev => [...prev, { role: 'assistant', content: 'Image generated successfully!' }]);
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error in handleSubmit:', error);
       setMessages(prev => [...prev, { 
         role: 'assistant', 
-        content: error instanceof Error ? error.message : 'Sorry, I encountered an error. Please try again.' 
+        content: error instanceof Error ? error.message : 'An unexpected error occurred. Please try again.' 
       }]);
     } finally {
       setIsLoading(false);

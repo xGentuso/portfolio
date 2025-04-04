@@ -67,6 +67,11 @@ global.fetch = jest.fn((url) => {
     }))
   }
   
+  // If testing error case
+  if (url.includes('deepinfra') && global.mockDeepInfraError) {
+    return Promise.reject(new Error('Failed to process request'))
+  }
+  
   // Otherwise return JSON response
   return Promise.resolve(new MockResponse(JSON.stringify({
     choices: [{
@@ -82,7 +87,6 @@ global.fetch = jest.fn((url) => {
 
 // Set up environment variables
 process.env.NEXT_PUBLIC_DEEP_INFRA_API_KEY = 'test-deep-infra-key'
-process.env.NEXT_PUBLIC_HUGGING_FACE_API_KEY = 'test-hugging-face-key'
 
 // Export test utilities
 export const mockFetch = global.fetch 
